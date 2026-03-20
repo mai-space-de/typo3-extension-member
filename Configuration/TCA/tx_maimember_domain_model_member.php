@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 return [
     'ctrl' => [
-        'title' => 'LLL:EXT:member/Resources/Private/Language/locallang_db.xlf:tx_member_domain_model_member',
+        'title' => 'LLL:EXT:member/Resources/Private/Language/locallang_db.xlf:tx_maimember_domain_model_member',
         'label' => 'name',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -14,7 +14,7 @@ return [
             'disabled' => 'hidden',
         ],
         'searchFields' => 'name,interests',
-        'iconfile' => 'EXT:member/Resources/Public/Icons/tx_member_domain_model_member.svg',
+        'iconfile' => 'EXT:member/Resources/Public/Icons/tx_maimember_domain_model_member.svg',
         'security' => [
             'ignorePageTypeRestriction' => true,
         ],
@@ -46,7 +46,7 @@ return [
         ],
         'name' => [
             'exclude' => false,
-            'label' => 'LLL:EXT:member/Resources/Private/Language/locallang_db.xlf:tx_member_domain_model_member.name',
+            'label' => 'LLL:EXT:member/Resources/Private/Language/locallang_db.xlf:tx_maimember_domain_model_member.name',
             'config' => [
                 'type' => 'input',
                 'size' => 40,
@@ -57,21 +57,21 @@ return [
         ],
         'status' => [
             'exclude' => false,
-            'label' => 'LLL:EXT:member/Resources/Private/Language/locallang_db.xlf:tx_member_domain_model_member.status',
+            'label' => 'LLL:EXT:member/Resources/Private/Language/locallang_db.xlf:tx_maimember_domain_model_member.status',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
                     [
-                        'label' => 'LLL:EXT:member/Resources/Private/Language/locallang_db.xlf:tx_member_domain_model_member.status.0',
+                        'label' => 'LLL:EXT:member/Resources/Private/Language/locallang_db.xlf:tx_maimember_domain_model_member.status.0',
                         'value' => 0,
                     ],
                     [
-                        'label' => 'LLL:EXT:member/Resources/Private/Language/locallang_db.xlf:tx_member_domain_model_member.status.1',
+                        'label' => 'LLL:EXT:member/Resources/Private/Language/locallang_db.xlf:tx_maimember_domain_model_member.status.1',
                         'value' => 1,
                     ],
                     [
-                        'label' => 'LLL:EXT:member/Resources/Private/Language/locallang_db.xlf:tx_member_domain_model_member.status.2',
+                        'label' => 'LLL:EXT:member/Resources/Private/Language/locallang_db.xlf:tx_maimember_domain_model_member.status.2',
                         'value' => 2,
                     ],
                 ],
@@ -80,7 +80,7 @@ return [
         ],
         'entry_date' => [
             'exclude' => false,
-            'label' => 'LLL:EXT:member/Resources/Private/Language/locallang_db.xlf:tx_member_domain_model_member.entry_date',
+            'label' => 'LLL:EXT:member/Resources/Private/Language/locallang_db.xlf:tx_maimember_domain_model_member.entry_date',
             'config' => [
                 'type' => 'datetime',
                 'format' => 'date',
@@ -91,30 +91,28 @@ return [
         ],
         'photo' => [
             'exclude' => false,
-            'label' => 'LLL:EXT:member/Resources/Private/Language/locallang_db.xlf:tx_member_domain_model_member.photo',
-            'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
-                'photo',
-                [
-                    'appearance' => [
-                        'createNewRelationLinkTitle' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:images.addFileReference',
-                    ],
-                    'overrideChildTca' => [
-                        'types' => [
-                            '0' => ['showitem' => '--linebreak--,title,description,--linebreak--,alternative'],
-                            \TYPO3\CMS\Core\Resource\File::FILETYPE_IMAGE => [
-                                'showitem' => '--linebreak--,title,description,--linebreak--,alternative',
-                            ],
+            'label' => 'LLL:EXT:member/Resources/Private/Language/locallang_db.xlf:tx_maimember_domain_model_member.photo',
+            'config' => [
+                'type' => 'file',
+                'allowed' => 'common-image-types',
+                'minitems' => 0,
+                'maxitems' => 1,
+                'appearance' => [
+                    'createNewRelationLinkTitle' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:images.addFileReference',
+                ],
+                'overrideChildTca' => [
+                    'types' => [
+                        '0' => ['showitem' => '--linebreak--,title,description,--linebreak--,alternative'],
+                        \TYPO3\CMS\Core\Resource\File::FILETYPE_IMAGE => [
+                            'showitem' => '--linebreak--,title,description,--linebreak--,alternative',
                         ],
                     ],
-                    'minitems' => 0,
-                    'maxitems' => 1,
                 ],
-                'jpg,jpeg,png,gif,webp'
-            ),
+            ],
         ],
         'interests' => [
             'exclude' => false,
-            'label' => 'LLL:EXT:member/Resources/Private/Language/locallang_db.xlf:tx_member_domain_model_member.interests',
+            'label' => 'LLL:EXT:member/Resources/Private/Language/locallang_db.xlf:tx_maimember_domain_model_member.interests',
             'config' => [
                 'type' => 'text',
                 'cols' => 40,
@@ -124,7 +122,7 @@ return [
         ],
         'fe_user' => [
             'exclude' => false,
-            'label' => 'LLL:EXT:member/Resources/Private/Language/locallang_db.xlf:tx_member_domain_model_member.fe_user',
+            'label' => 'LLL:EXT:member/Resources/Private/Language/locallang_db.xlf:tx_maimember_domain_model_member.fe_user',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',

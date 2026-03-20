@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Maispace\Member\Tests\Unit\Domain\Model;
+namespace Maispace\MaiMember\Tests\Unit\Domain\Model;
 
-use Maispace\Member\Domain\Model\MemberApplication;
+use Maispace\MaiMember\Domain\Model\MemberApplication;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

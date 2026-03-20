@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Maispace\Member\Service;
+namespace Maispace\MaiMember\Service;
 
-use Maispace\Member\Domain\Model\Member;
-use Maispace\Member\Domain\Model\MemberApplication;
-use Maispace\Member\Domain\Repository\MemberApplicationRepository;
-use Maispace\Member\Domain\Repository\MemberRepository;
-use Maispace\Member\Event\MemberApprovedEvent;
-use Maispace\Member\Event\MemberStatusChangedEvent;
+use Maispace\MaiMember\Domain\Model\Member;
+use Maispace\MaiMember\Domain\Model\MemberApplication;
+use Maispace\MaiMember\Domain\Repository\MemberApplicationRepository;
+use Maispace\MaiMember\Domain\Repository\MemberRepository;
+use Maispace\MaiMember\Event\MemberApprovedEvent;
+use Maispace\MaiMember\Event\MemberStatusChangedEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 

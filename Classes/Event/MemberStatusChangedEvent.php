@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Maispace\Member\Event;
+namespace Maispace\MaiMember\Event;
 
-use Maispace\Member\Domain\Model\Member;
+use Maispace\MaiMember\Domain\Model\Member;
 
 final class MemberStatusChangedEvent
 {

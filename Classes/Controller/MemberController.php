@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Maispace\Member\Controller;
+namespace Maispace\MaiMember\Controller;
 
-use Maispace\Member\Domain\Model\Member;
-use Maispace\Member\Domain\Repository\MemberRepository;
+use Maispace\MaiMember\Domain\Model\Member;
+use Maispace\MaiMember\Domain\Repository\MemberRepository;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 

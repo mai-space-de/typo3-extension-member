@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Maispace\Member\Domain\Model;
+namespace Maispace\MaiMember\Domain\Model;
 
 use TYPO3\CMS\Extbase\Annotation\ORM\Lazy;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;

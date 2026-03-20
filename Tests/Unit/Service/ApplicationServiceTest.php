@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Maispace\Member\Tests\Unit\Service;
+namespace Maispace\MaiMember\Tests\Unit\Service;
 
-use Maispace\Member\Domain\Model\Member;
-use Maispace\Member\Domain\Model\MemberApplication;
-use Maispace\Member\Domain\Repository\MemberApplicationRepository;
-use Maispace\Member\Domain\Repository\MemberRepository;
-use Maispace\Member\Event\MemberApprovedEvent;
-use Maispace\Member\Event\MemberStatusChangedEvent;
-use Maispace\Member\Service\ApplicationService;
+use Maispace\MaiMember\Domain\Model\Member;
+use Maispace\MaiMember\Domain\Model\MemberApplication;
+use Maispace\MaiMember\Domain\Repository\MemberApplicationRepository;
+use Maispace\MaiMember\Domain\Repository\MemberRepository;
+use Maispace\MaiMember\Event\MemberApprovedEvent;
+use Maispace\MaiMember\Event\MemberStatusChangedEvent;
+use Maispace\MaiMember\Service\ApplicationService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;

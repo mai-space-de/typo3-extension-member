@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Maispace\Member\Controller\Backend;
+namespace Maispace\MaiMember\Controller\Backend;
 
-use Maispace\Member\Domain\Model\MemberApplication;
-use Maispace\Member\Domain\Repository\MemberApplicationRepository;
-use Maispace\Member\Service\ApplicationService;
+use Maispace\MaiMember\Domain\Model\MemberApplication;
+use Maispace\MaiMember\Domain\Repository\MemberApplicationRepository;
+use Maispace\MaiMember\Service\ApplicationService;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -31,7 +31,7 @@ class MemberApplicationController extends ActionController
             'approvedApplications' => $this->applicationRepository->findApproved(),
         ]);
 
-        return $moduleTemplate->renderResponse('MemberApplication/Index');
+        return $moduleTemplate->renderResponse('Index');
     }
 
     /**
@@ -41,7 +41,7 @@ class MemberApplicationController extends ActionController
     {
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $moduleTemplate->assign('application', $application);
-        return $moduleTemplate->renderResponse('MemberApplication/Show');
+        return $moduleTemplate->renderResponse('Show');
     }
 
     /**

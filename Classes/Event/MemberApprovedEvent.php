@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Maispace\Member\Event;
+namespace Maispace\MaiMember\Event;
 
-use Maispace\Member\Domain\Model\Member;
-use Maispace\Member\Domain\Model\MemberApplication;
+use Maispace\MaiMember\Domain\Model\Member;
+use Maispace\MaiMember\Domain\Model\MemberApplication;
 
 final class MemberApprovedEvent
 {

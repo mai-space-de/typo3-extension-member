@@ -1,4 +1,4 @@
-plugin.tx_member {
+plugin.tx_maimember {
     view {
         templateRootPath =
         partialRootPath =
