@@ -1,0 +1,23 @@
+plugin.tx_member {
+    view {
+        templateRootPaths {
+            0 = EXT:member/Resources/Private/Templates/
+            10 = {$plugin.tx_member.view.templateRootPath}
+        }
+        partialRootPaths {
+            0 = EXT:member/Resources/Private/Partials/
+            10 = {$plugin.tx_member.view.partialRootPath}
+        }
+        layoutRootPaths {
+            0 = EXT:member/Resources/Private/Layouts/
+            10 = {$plugin.tx_member.view.layoutRootPath}
+        }
+    }
+    persistence {
+        storagePid = {$plugin.tx_member.persistence.storagePid}
+    }
+    settings {
+        itemsPerPage = 12
+        defaultStatus = 1
+    }
+}

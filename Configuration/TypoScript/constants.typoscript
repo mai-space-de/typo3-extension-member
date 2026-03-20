@@ -1,0 +1,10 @@
+plugin.tx_member {
+    view {
+        templateRootPath =
+        partialRootPath =
+        layoutRootPath =
+    }
+    persistence {
+        storagePid =
+    }
+}
