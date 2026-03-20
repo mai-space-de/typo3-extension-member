@@ -1,0 +1,46 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:layout name="Default"/>
+
+<f:section name="main">
+    <div class="tx-member-member-show">
+        <h1><f:translate key="LLL:EXT:member/Resources/Private/Language/locallang.xlf:member.show.title"/>: {member.name}</h1>
+
+        <div class="tx-member-profile">
+            <f:if condition="{member.photo}">
+                <div class="tx-member-profile__photo">
+                    <f:for each="{member.photo}" as="photo">
+                        <f:image image="{photo}" alt="{member.name}" class="tx-member-profile__image" width="200"/>
+                    </f:for>
+                </div>
+            </f:if>
+
+            <div class="tx-member-profile__details">
+                <f:if condition="{member.entryDate}">
+                    <p class="tx-member-profile__entry-date">
+                        <strong><f:translate key="LLL:EXT:member/Resources/Private/Language/locallang.xlf:member.show.entryDate"/>:</strong>
+                        <f:format.date date="{member.entryDate}" format="%d.%m.%Y"/>
+                    </p>
+                </f:if>
+
+                <f:if condition="{member.interests}">
+                    <div class="tx-member-profile__interests">
+                        <strong><f:translate key="LLL:EXT:member/Resources/Private/Language/locallang.xlf:member.show.interests"/>:</strong>
+                        <ul class="tx-member-profile__interests-list">
+                            <f:for each="{member.interestsArray}" as="interest">
+                                <li>{interest}</li>
+                            </f:for>
+                        </ul>
+                    </div>
+                </f:if>
+            </div>
+        </div>
+
+        <f:link.action action="list" class="tx-member-back-link">
+            <f:translate key="LLL:EXT:member/Resources/Private/Language/locallang.xlf:member.show.back"/>
+        </f:link.action>
+    </div>
+</f:section>
+
+</html>
