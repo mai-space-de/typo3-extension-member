@@ -8,10 +8,10 @@ return [
         'access' => 'user',
         'workspaces' => 'live',
         'iconIdentifier' => 'module-member',
-        'labels' => 'LLL:EXT:member/Resources/Private/Language/locallang_mod.xlf',
-        'extensionName' => 'Member',
+        'labels' => 'LLL:EXT:mai_member/Resources/Private/Language/locallang_mod.xlf',
+        'extensionName' => 'MaiMember',
         'controllerActions' => [
-            \Maispace\Member\Controller\Backend\MemberApplicationController::class => [
+            \Maispace\MaiMember\Controller\Backend\MemberApplicationController::class => [
                 'index',
                 'show',
                 'approve',

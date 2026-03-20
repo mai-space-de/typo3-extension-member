@@ -1,5 +1,5 @@
 {
-    "name": "maispace/member",
+    "name": "maispace/mai-member",
     "description": "TYPO3 Extension: Mitglieder-Verwaltung (Record & Bewerbung)",
     "type": "typo3-cms-extension",
     "license": "GPL-2.0-or-later",
@@ -29,12 +29,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Maispace\\Member\\": "Classes/"
+            "Maispace\\MaiMember\\": "Classes/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Maispace\\Member\\Tests\\": "Tests/"
+            "Maispace\\MaiMember\\Tests\\": "Tests/"
         }
     },
     "config": {
@@ -45,7 +45,7 @@
     },
     "extra": {
         "typo3/cms": {
-            "extension-key": "member"
+            "extension-key": "mai_member"
         }
     }
 }
