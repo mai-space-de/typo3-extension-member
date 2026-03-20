@@ -3,3 +3,4 @@
 /.cache/
 /.Build/
 /node_modules/
+/public/
