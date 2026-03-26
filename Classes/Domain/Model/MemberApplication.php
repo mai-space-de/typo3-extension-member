@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Maispace\MaiMember\Domain\Model;
 
@@ -17,11 +17,8 @@ class MemberApplication extends AbstractEntity
     public const STATUS_ACTIVE = 3;
 
     protected string $applicantName = '';
-
     protected string $email = '';
-
     protected string $motivation = '';
-
     protected int $status = self::STATUS_PENDING;
 
     /**

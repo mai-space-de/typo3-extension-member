@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Maispace\MaiMember\Controller;
 
@@ -8,7 +8,6 @@ use Maispace\MaiMember\Domain\Model\MemberApplication;
 use Maispace\MaiMember\Domain\Repository\MemberApplicationRepository;
 use Maispace\MaiMember\Service\ApplicationService;
 use Psr\Http\Message\ResponseInterface;
-use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 class MemberApplicationController extends ActionController
@@ -16,7 +15,8 @@ class MemberApplicationController extends ActionController
     public function __construct(
         private readonly MemberApplicationRepository $applicationRepository,
         private readonly ApplicationService $applicationService
-    ) {}
+    ) {
+    }
 
     /**
      * Show the application form.
@@ -25,6 +25,7 @@ class MemberApplicationController extends ActionController
     {
         $application = new MemberApplication();
         $this->view->assign('application', $application);
+
         return $this->htmlResponse();
     }
 
@@ -34,6 +35,7 @@ class MemberApplicationController extends ActionController
     public function createAction(MemberApplication $application): ResponseInterface
     {
         $this->applicationRepository->add($application);
+
         return $this->redirect('confirmation');
     }
 

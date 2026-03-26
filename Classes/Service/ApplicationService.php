@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Maispace\MaiMember\Service;
 
@@ -20,7 +20,8 @@ class ApplicationService
         private readonly MemberRepository $memberRepository,
         private readonly PersistenceManagerInterface $persistenceManager,
         private readonly EventDispatcherInterface $eventDispatcher
-    ) {}
+    ) {
+    }
 
     /**
      * Approve a pending application and create an active member record.
@@ -30,15 +31,7 @@ class ApplicationService
     public function approveApplication(MemberApplication $application): Member
     {
         if (!$application->isPending()) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'Cannot approve application %d: expected status pending (%d), got %d.',
-                    $application->getUid() ?? 0,
-                    MemberApplication::STATUS_PENDING,
-                    $application->getStatus()
-                ),
-                1_700_000_001
-            );
+            throw new \InvalidArgumentException(sprintf('Cannot approve application %d: expected status pending (%d), got %d.', $application->getUid() ?? 0, MemberApplication::STATUS_PENDING, $application->getStatus()), 1_700_000_001);
         }
 
         $application->setStatus(MemberApplication::STATUS_APPROVED);
@@ -68,23 +61,12 @@ class ApplicationService
     public function activateMember(MemberApplication $application): Member
     {
         if (!$application->isApproved()) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'Cannot activate application %d: expected status approved (%d), got %d.',
-                    $application->getUid() ?? 0,
-                    MemberApplication::STATUS_APPROVED,
-                    $application->getStatus()
-                ),
-                1_700_000_002
-            );
+            throw new \InvalidArgumentException(sprintf('Cannot activate application %d: expected status approved (%d), got %d.', $application->getUid() ?? 0, MemberApplication::STATUS_APPROVED, $application->getStatus()), 1_700_000_002);
         }
 
         $member = $application->getMember();
         if ($member === null) {
-            throw new \RuntimeException(
-                sprintf('Application %d has no associated member.', $application->getUid() ?? 0),
-                1_700_000_003
-            );
+            throw new \RuntimeException(sprintf('Application %d has no associated member.', $application->getUid() ?? 0), 1_700_000_003);
         }
 
         $previousStatus = $member->getStatus();
@@ -106,15 +88,7 @@ class ApplicationService
     public function rejectApplication(MemberApplication $application): void
     {
         if (!$application->isPending()) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'Cannot reject application %d: expected status pending (%d), got %d.',
-                    $application->getUid() ?? 0,
-                    MemberApplication::STATUS_PENDING,
-                    $application->getStatus()
-                ),
-                1_700_000_004
-            );
+            throw new \InvalidArgumentException(sprintf('Cannot reject application %d: expected status pending (%d), got %d.', $application->getUid() ?? 0, MemberApplication::STATUS_PENDING, $application->getStatus()), 1_700_000_004);
         }
 
         $application->setStatus(MemberApplication::STATUS_REJECTED);

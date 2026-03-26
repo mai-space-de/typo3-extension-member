@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Maispace\MaiMember\Tests\Unit\Service;
 
@@ -164,6 +164,7 @@ class ApplicationServiceTest extends TestCase
             ->method('dispatch')
             ->willReturnCallback(function (object $event) use (&$capturedEvent): object {
                 $capturedEvent = $event;
+
                 return $event;
             });
 

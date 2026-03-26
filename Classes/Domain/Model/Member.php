@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Maispace\MaiMember\Domain\Model;
 
@@ -17,9 +17,7 @@ class Member extends AbstractEntity
     public const STATUS_SUSPENDED = 2;
 
     protected string $name = '';
-
     protected int $status = self::STATUS_INACTIVE;
-
     protected ?\DateTimeImmutable $entryDate = null;
 
     /**
@@ -119,6 +117,7 @@ class Member extends AbstractEntity
         if ($this->interests === '') {
             return [];
         }
+
         return array_values(
             array_filter(
                 array_map('trim', explode(',', $this->interests))

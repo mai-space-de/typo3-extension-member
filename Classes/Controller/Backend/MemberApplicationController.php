@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Maispace\MaiMember\Controller\Backend;
 
@@ -17,7 +17,8 @@ class MemberApplicationController extends ActionController
         private readonly MemberApplicationRepository $applicationRepository,
         private readonly ApplicationService $applicationService,
         private readonly ModuleTemplateFactory $moduleTemplateFactory
-    ) {}
+    ) {
+    }
 
     /**
      * List all pending applications.
@@ -27,7 +28,7 @@ class MemberApplicationController extends ActionController
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
 
         $moduleTemplate->assignMultiple([
-            'pendingApplications' => $this->applicationRepository->findPending(),
+            'pendingApplications'  => $this->applicationRepository->findPending(),
             'approvedApplications' => $this->applicationRepository->findApproved(),
         ]);
 
@@ -41,6 +42,7 @@ class MemberApplicationController extends ActionController
     {
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $moduleTemplate->assign('application', $application);
+
         return $moduleTemplate->renderResponse('Show');
     }
 

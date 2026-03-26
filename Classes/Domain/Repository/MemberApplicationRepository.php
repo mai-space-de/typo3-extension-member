@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Maispace\MaiMember\Domain\Repository;
 
@@ -29,6 +29,7 @@ class MemberApplicationRepository extends Repository
         $query->matching(
             $query->equals('status', $status)
         );
+
         return $query->execute();
     }
 

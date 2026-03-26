@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Maispace\MaiMember\Event;
 
@@ -12,7 +12,8 @@ final class MemberStatusChangedEvent
         private readonly Member $member,
         private readonly int $previousStatus,
         private readonly int $newStatus
-    ) {}
+    ) {
+    }
 
     public function getMember(): Member
     {

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Maispace\MaiMember\Event;
 
@@ -12,7 +12,8 @@ final class MemberApprovedEvent
     public function __construct(
         private readonly Member $member,
         private readonly MemberApplication $application
-    ) {}
+    ) {
+    }
 
     public function getMember(): Member
     {

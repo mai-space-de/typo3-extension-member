@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Maispace\MaiMember\Controller;
 
@@ -13,7 +13,8 @@ class MemberController extends ActionController
 {
     public function __construct(
         private readonly MemberRepository $memberRepository
-    ) {}
+    ) {
+    }
 
     /**
      * Display a list of active members, optionally filtered by interest.
@@ -23,7 +24,7 @@ class MemberController extends ActionController
         $members = $this->memberRepository->findActiveMembers($interest);
 
         $this->view->assignMultiple([
-            'members' => $members,
+            'members'         => $members,
             'currentInterest' => $interest,
         ]);
 
@@ -36,6 +37,7 @@ class MemberController extends ActionController
     public function showAction(Member $member): ResponseInterface
     {
         $this->view->assign('member', $member);
+
         return $this->htmlResponse();
     }
 }
