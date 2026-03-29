@@ -5,7 +5,7 @@
 
 Member management extension for managing organisation members and handling applications with status workflows. FE-User linking requires `mai_account`.
 
-**Requires:** TYPO3 13.4 LTS / 14.0 · PHP 8.2+
+**Requires:** TYPO3 13.4 LTS / 14.1 · PHP 8.2+
 
 ---
 
