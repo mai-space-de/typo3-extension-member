@@ -1,0 +1,5 @@
+plugin.tx_maimember {
+    settings {
+        listLimit = 12
+    }
+}

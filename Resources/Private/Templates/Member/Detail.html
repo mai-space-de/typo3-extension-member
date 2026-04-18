@@ -1,0 +1,41 @@
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true"
+>
+<div class="mai-member-detail">
+    <f:if condition="{member.image}">
+        <div class="mai-member-detail__image">
+            <f:image image="{member.image}" alt="{member.fullName}" width="400" height="400" />
+        </div>
+    </f:if>
+
+    <div class="mai-member-detail__content">
+        <h1 class="mai-member-detail__name">{member.fullName}</h1>
+
+        <f:if condition="{member.email}">
+            <p class="mai-member-detail__email">
+                <a href="mailto:{member.email}">{member.email}</a>
+            </p>
+        </f:if>
+
+        <f:if condition="{member.phone}">
+            <p class="mai-member-detail__phone">
+                <a href="tel:{member.phone}">{member.phone}</a>
+            </p>
+        </f:if>
+
+        <f:if condition="{member.joinDate}">
+            <p class="mai-member-detail__join-date">
+                <f:translate key="member.detail.joinDate" extensionName="mai_member">Member since</f:translate>:
+                <f:format.date format="d.m.Y">{member.joinDate}</f:format.date>
+            </p>
+        </f:if>
+    </div>
+
+    <div class="mai-member-detail__back">
+        <f:link.action action="list">
+            <f:translate key="member.detail.back" extensionName="mai_member">Back to list</f:translate>
+        </f:link.action>
+    </div>
+</div>
+</html>

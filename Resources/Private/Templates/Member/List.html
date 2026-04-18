@@ -1,0 +1,41 @@
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true"
+>
+<f:if condition="{members}">
+    <f:then>
+        <div class="mai-member-list">
+            <f:for each="{members}" as="member">
+                <div class="mai-member-list__item">
+                    <f:if condition="{member.image}">
+                        <div class="mai-member-list__image">
+                            <f:image image="{member.image}" alt="{member.fullName}" width="200" height="200" />
+                        </div>
+                    </f:if>
+                    <div class="mai-member-list__content">
+                        <h3 class="mai-member-list__name">
+                            <f:link.action action="detail" arguments="{member: member}">{member.fullName}</f:link.action>
+                        </h3>
+                        <f:if condition="{member.email}">
+                            <p class="mai-member-list__email">
+                                <a href="mailto:{member.email}">{member.email}</a>
+                            </p>
+                        </f:if>
+                    </div>
+                </div>
+            </f:for>
+        </div>
+
+        <f:if condition="{pagination}">
+            <nav class="mai-member-list__pagination">
+                <f:render partial="Pagination" arguments="{pagination: pagination}" />
+            </nav>
+        </f:if>
+    </f:then>
+    <f:else>
+        <p class="mai-member-list__empty">
+            <f:translate key="member.list.empty" extensionName="mai_member">No members found.</f:translate>
+        </p>
+    </f:else>
+</f:if>
+</html>

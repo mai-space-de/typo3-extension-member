@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="messages" product-name="mai_member">
+        <body>
+            <trans-unit id="member.list.title">
+                <source>Members</source>
+            </trans-unit>
+            <trans-unit id="member.detail.title">
+                <source>Member Detail</source>
+            </trans-unit>
+            <trans-unit id="member.notFound">
+                <source>Member not found.</source>
+            </trans-unit>
+
+            <trans-unit id="application.form.title">
+                <source>Apply for Membership</source>
+            </trans-unit>
+            <trans-unit id="application.form.firstName">
+                <source>First Name</source>
+            </trans-unit>
+            <trans-unit id="application.form.lastName">
+                <source>Last Name</source>
+            </trans-unit>
+            <trans-unit id="application.form.email">
+                <source>Email</source>
+            </trans-unit>
+            <trans-unit id="application.form.message">
+                <source>Message</source>
+            </trans-unit>
+            <trans-unit id="application.form.submit">
+                <source>Submit Application</source>
+            </trans-unit>
+            <trans-unit id="application.success.title">
+                <source>Application Received</source>
+            </trans-unit>
+            <trans-unit id="application.success.message">
+                <source>Your membership application has been received. We will get back to you shortly.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

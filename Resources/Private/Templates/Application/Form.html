@@ -1,0 +1,46 @@
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true"
+>
+<div class="mai-member-application">
+    <h2 class="mai-member-application__title">
+        <f:translate key="application.form.title" extensionName="mai_member" />
+    </h2>
+
+    <f:flashMessages />
+
+    <f:form action="submit" controller="Application" extensionName="MaiMember" method="post" object="{application}" objectName="application">
+        <div class="mai-member-application__field">
+            <f:form.label for="firstName">
+                <f:translate key="application.form.firstName" extensionName="mai_member" />
+            </f:form.label>
+            <f:form.textfield id="firstName" property="firstName" required="required" />
+        </div>
+
+        <div class="mai-member-application__field">
+            <f:form.label for="lastName">
+                <f:translate key="application.form.lastName" extensionName="mai_member" />
+            </f:form.label>
+            <f:form.textfield id="lastName" property="lastName" required="required" />
+        </div>
+
+        <div class="mai-member-application__field">
+            <f:form.label for="email">
+                <f:translate key="application.form.email" extensionName="mai_member" />
+            </f:form.label>
+            <f:form.textfield id="email" property="email" type="email" required="required" />
+        </div>
+
+        <div class="mai-member-application__field">
+            <f:form.label for="message">
+                <f:translate key="application.form.message" extensionName="mai_member" />
+            </f:form.label>
+            <f:form.textarea id="message" property="message" rows="5" />
+        </div>
+
+        <div class="mai-member-application__submit">
+            <f:form.submit value="{f:translate(key: 'application.form.submit', extensionName: 'mai_member')}" />
+        </div>
+    </f:form>
+</div>
+</html>

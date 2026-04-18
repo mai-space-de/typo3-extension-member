@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<T3DataStructure>
+    <meta>
+        <langDisable>1</langDisable>
+    </meta>
+    <sheets>
+        <sDEF>
+            <ROOT>
+                <sheetTitle>LLL:EXT:mai_member/Resources/Private/Language/locallang_db.xlf:flexform.sheet.general</sheetTitle>
+                <type>array</type>
+                <el>
+                    <settings.listLimit>
+                        <label>LLL:EXT:mai_member/Resources/Private/Language/locallang_db.xlf:flexform.settings.listLimit</label>
+                        <config>
+                            <type>number</type>
+                            <default>12</default>
+                        </config>
+                    </settings.listLimit>
+                </el>
+            </ROOT>
+        </sDEF>
+    </sheets>
+</T3DataStructure>

@@ -1,0 +1,58 @@
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+    data-namespace-typo3-fluid="true"
+>
+<be:pageRenderer />
+
+<be:moduleLayout>
+    <f:render section="Content" />
+</be:moduleLayout>
+
+<f:section name="Content">
+    <div class="module-body">
+        <h1><f:translate key="LLL:EXT:mai_member/Resources/Private/Language/locallang.xlf:member.list.title" /></h1>
+
+        <f:if condition="{applications}">
+            <div class="callout callout-warning">
+                <h4><f:translate key="LLL:EXT:mai_member/Resources/Private/Language/locallang.xlf:application.form.title" /></h4>
+                <p>{applications -> f:count()} pending application(s)</p>
+            </div>
+        </f:if>
+
+        <f:if condition="{members}">
+            <f:then>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Status</th>
+                            <th>Join Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <f:for each="{members}" as="member">
+                            <tr>
+                                <td>{member.fullName}</td>
+                                <td>{member.email}</td>
+                                <td>{member.phone}</td>
+                                <td>{member.status}</td>
+                                <td>
+                                    <f:if condition="{member.joinDate}">
+                                        <f:format.date format="d.m.Y">{member.joinDate}</f:format.date>
+                                    </f:if>
+                                </td>
+                            </tr>
+                        </f:for>
+                    </tbody>
+                </table>
+            </f:then>
+            <f:else>
+                <p>No members found.</p>
+            </f:else>
+        </f:if>
+    </div>
+</f:section>
+</html>

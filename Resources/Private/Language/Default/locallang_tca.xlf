@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="messages" product-name="mai_member">
+        <body>
+            <trans-unit id="table.tx_maimember_member">
+                <source>Member</source>
+            </trans-unit>
+            <trans-unit id="table.tx_maimember_application">
+                <source>Application</source>
+            </trans-unit>
+
+            <trans-unit id="tx_maimember_member.first_name">
+                <source>First Name</source>
+            </trans-unit>
+            <trans-unit id="tx_maimember_member.last_name">
+                <source>Last Name</source>
+            </trans-unit>
+            <trans-unit id="tx_maimember_member.email">
+                <source>Email</source>
+            </trans-unit>
+            <trans-unit id="tx_maimember_member.phone">
+                <source>Phone</source>
+            </trans-unit>
+            <trans-unit id="tx_maimember_member.status">
+                <source>Status</source>
+            </trans-unit>
+            <trans-unit id="tx_maimember_member.status.active">
+                <source>Active</source>
+            </trans-unit>
+            <trans-unit id="tx_maimember_member.status.inactive">
+                <source>Inactive</source>
+            </trans-unit>
+            <trans-unit id="tx_maimember_member.join_date">
+                <source>Join Date</source>
+            </trans-unit>
+            <trans-unit id="tx_maimember_member.image">
+                <source>Image</source>
+            </trans-unit>
+            <trans-unit id="tx_maimember_member.fe_user">
+                <source>Frontend User</source>
+            </trans-unit>
+
+            <trans-unit id="tx_maimember_application.first_name">
+                <source>First Name</source>
+            </trans-unit>
+            <trans-unit id="tx_maimember_application.last_name">
+                <source>Last Name</source>
+            </trans-unit>
+            <trans-unit id="tx_maimember_application.email">
+                <source>Email</source>
+            </trans-unit>
+            <trans-unit id="tx_maimember_application.message">
+                <source>Message</source>
+            </trans-unit>
+            <trans-unit id="tx_maimember_application.status">
+                <source>Status</source>
+            </trans-unit>
+            <trans-unit id="tx_maimember_application.status.pending">
+                <source>Pending</source>
+            </trans-unit>
+            <trans-unit id="tx_maimember_application.status.approved">
+                <source>Approved</source>
+            </trans-unit>
+            <trans-unit id="tx_maimember_application.status.rejected">
+                <source>Rejected</source>
+            </trans-unit>
+            <trans-unit id="tx_maimember_application.submitted_at">
+                <source>Submitted At</source>
+            </trans-unit>
+            <trans-unit id="tx_maimember_application.member">
+                <source>Member</source>
+            </trans-unit>
+
+            <trans-unit id="palette.name">
+                <source>Name</source>
+            </trans-unit>
+            <trans-unit id="palette.contact">
+                <source>Contact</source>
+            </trans-unit>
+
+            <trans-unit id="tab.contact">
+                <source>Contact</source>
+            </trans-unit>
+            <trans-unit id="tab.meta">
+                <source>Meta</source>
+            </trans-unit>
+            <trans-unit id="tab.language">
+                <source>Language</source>
+            </trans-unit>
+            <trans-unit id="tab.access">
+                <source>Access</source>
+            </trans-unit>
+            <trans-unit id="tab.workflow">
+                <source>Workflow</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

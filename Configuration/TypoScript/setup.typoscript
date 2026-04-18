@@ -1,0 +1,51 @@
+plugin.tx_maimember {
+    view {
+        templateRootPaths {
+            0 = EXT:mai_member/Resources/Private/Templates/
+        }
+        partialRootPaths {
+            0 = EXT:mai_member/Resources/Private/Partials/
+        }
+        layoutRootPaths {
+            0 = EXT:mai_member/Resources/Private/Layouts/
+        }
+    }
+    settings {
+        listLimit = {$plugin.tx_maimember.settings.listLimit}
+    }
+}
+
+tt_content.mai_member_view = FLUIDTEMPLATE
+tt_content.mai_member_view {
+    templateName = Member/List
+    templateRootPaths {
+        0 = EXT:mai_member/Resources/Private/Templates/
+    }
+    partialRootPaths {
+        0 = EXT:mai_member/Resources/Private/Partials/
+    }
+    layoutRootPaths {
+        0 = EXT:mai_member/Resources/Private/Layouts/
+    }
+    dataProcessing {
+        10 = TYPO3\CMS\Frontend\DataProcessing\FlexFormProcessor
+        10 {
+            fieldName = pi_flexform
+            targetVariable = flexform
+        }
+    }
+}
+
+tt_content.mai_member_application = FLUIDTEMPLATE
+tt_content.mai_member_application {
+    templateName = Application/Form
+    templateRootPaths {
+        0 = EXT:mai_member/Resources/Private/Templates/
+    }
+    partialRootPaths {
+        0 = EXT:mai_member/Resources/Private/Partials/
+    }
+    layoutRootPaths {
+        0 = EXT:mai_member/Resources/Private/Layouts/
+    }
+}
