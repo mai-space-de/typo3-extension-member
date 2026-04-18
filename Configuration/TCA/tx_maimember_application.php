@@ -17,23 +17,22 @@ return (new Table($lang('table.tx_maimember_application')))
     ->setLabel('last_name')
     ->setAlternativeLabelFields('first_name, email')
     ->appendAlternativeLabelToLabel()
-    ->setSearchFields('first_name, last_name, email, message')
     ->setIconFile('EXT:mai_member/Resources/Public/Icons/tx_maimember_application.svg')
     ->setDefaultSorting('ORDER BY submitted_at DESC')
     ->addColumn(
         'first_name',
         $lang('tx_maimember_application.first_name'),
-        (new InputConfig())->setSize(30)->setMax(100)->setEval('trim,required')
+        (new InputConfig())->setSize(30)->setMax(100)->setEval('trim')->setRequired()
     )
     ->addColumn(
         'last_name',
         $lang('tx_maimember_application.last_name'),
-        (new InputConfig())->setSize(30)->setMax(100)->setEval('trim,required')
+        (new InputConfig())->setSize(30)->setMax(100)->setEval('trim')->setRequired()
     )
     ->addColumn(
         'email',
         $lang('tx_maimember_application.email'),
-        (new EmailConfig())->setEval('required')
+        (new EmailConfig())->setRequired()
     )
     ->addColumn(
         'message',

@@ -17,24 +17,23 @@ return (new Table($lang('table.tx_maimember_member')))
     ->setLabel('last_name')
     ->setAlternativeLabelFields('first_name')
     ->appendAlternativeLabelToLabel()
-    ->setSearchFields('first_name, last_name, email, phone')
     ->setIconFile('EXT:mai_member/Resources/Public/Icons/tx_maimember_member.svg')
     ->setDefaultSorting('ORDER BY last_name ASC, first_name ASC')
     ->setThumbnailField('image')
     ->addColumn(
         'first_name',
         $lang('tx_maimember_member.first_name'),
-        (new InputConfig())->setSize(30)->setMax(100)->setEval('trim,required')
+        (new InputConfig())->setSize(30)->setMax(100)->setEval('trim')->setRequired()
     )
     ->addColumn(
         'last_name',
         $lang('tx_maimember_member.last_name'),
-        (new InputConfig())->setSize(30)->setMax(100)->setEval('trim,required')
+        (new InputConfig())->setSize(30)->setMax(100)->setEval('trim')->setRequired()
     )
     ->addColumn(
         'email',
         $lang('tx_maimember_member.email'),
-        (new EmailConfig())->setEval('required')
+        (new EmailConfig())->setRequired()
     )
     ->addColumn(
         'phone',
