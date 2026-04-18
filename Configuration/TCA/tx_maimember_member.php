@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+use Maispace\MaiBase\TableConfigurationArray\FieldConfig\DatetimeConfig;
+use Maispace\MaiBase\TableConfigurationArray\FieldConfig\EmailConfig;
+use Maispace\MaiBase\TableConfigurationArray\FieldConfig\FileConfig;
+use Maispace\MaiBase\TableConfigurationArray\FieldConfig\InputConfig;
+use Maispace\MaiBase\TableConfigurationArray\FieldConfig\SelectSingleConfig;
 use Maispace\MaiBase\TableConfigurationArray\Helper;
 use Maispace\MaiBase\TableConfigurationArray\Table;
 
@@ -19,65 +24,57 @@ return (new Table($lang('table.tx_maimember_member')))
     ->addColumn(
         'first_name',
         $lang('tx_maimember_member.first_name'),
-        ['type' => 'input', 'size' => 30, 'max' => 100, 'eval' => 'trim,required']
+        (new InputConfig())->setSize(30)->setMax(100)->setEval('trim,required')
     )
     ->addColumn(
         'last_name',
         $lang('tx_maimember_member.last_name'),
-        ['type' => 'input', 'size' => 30, 'max' => 100, 'eval' => 'trim,required']
+        (new InputConfig())->setSize(30)->setMax(100)->setEval('trim,required')
     )
     ->addColumn(
         'email',
         $lang('tx_maimember_member.email'),
-        ['type' => 'email', 'eval' => 'required']
+        (new EmailConfig())->setEval('required')
     )
     ->addColumn(
         'phone',
         $lang('tx_maimember_member.phone'),
-        ['type' => 'input', 'size' => 20, 'max' => 30, 'eval' => 'trim']
+        (new InputConfig())->setSize(20)->setMax(30)->setEval('trim')
     )
     ->addColumn(
         'status',
         $lang('tx_maimember_member.status'),
-        [
-            'type' => 'select',
-            'renderType' => 'selectSingle',
-            'items' => [
+        (new SelectSingleConfig())
+            ->setItems([
                 ['label' => $lang('tx_maimember_member.status.active'), 'value' => 'active'],
                 ['label' => $lang('tx_maimember_member.status.inactive'), 'value' => 'inactive'],
-            ],
-            'default' => 'active',
-        ]
+            ])
+            ->setDefault('active')
     )
     ->addColumn(
         'join_date',
         $lang('tx_maimember_member.join_date'),
-        ['type' => 'datetime', 'format' => 'date']
+        (new DatetimeConfig())->setFormat('date')
     )
     ->addColumn(
         'image',
         $lang('tx_maimember_member.image'),
-        [
-            'type' => 'file',
-            'allowed' => 'common-image-types',
-            'maxitems' => 1,
-            'appearance' => [
+        (new FileConfig())
+            ->setAllowed('common-image-types')
+            ->setMaxItems(1)
+            ->setAppearance([
                 'createNewRelationLinkTitle' => $lang('tx_maimember_member.image.addFile'),
-            ],
-        ]
+            ])
     )
     ->addColumn(
         'fe_user',
         $lang('tx_maimember_member.fe_user'),
-        [
-            'type' => 'select',
-            'renderType' => 'selectSingle',
-            'foreign_table' => 'fe_users',
-            'foreign_table_where' => 'ORDER BY fe_users.username',
-            'items' => [['label' => '', 'value' => 0]],
-            'minitems' => 0,
-            'maxitems' => 1,
-        ]
+        (new SelectSingleConfig())
+            ->setForeignTable('fe_users')
+            ->setForeignTableWhere('ORDER BY fe_users.username')
+            ->setItems([['label' => '', 'value' => 0]])
+            ->setMinItems(0)
+            ->setMaxItems(1)
     )
     ->addPalette(
         'name',

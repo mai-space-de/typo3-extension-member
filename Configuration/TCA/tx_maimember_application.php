@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+use Maispace\MaiBase\TableConfigurationArray\FieldConfig\DatetimeConfig;
+use Maispace\MaiBase\TableConfigurationArray\FieldConfig\EmailConfig;
+use Maispace\MaiBase\TableConfigurationArray\FieldConfig\InputConfig;
+use Maispace\MaiBase\TableConfigurationArray\FieldConfig\SelectSingleConfig;
+use Maispace\MaiBase\TableConfigurationArray\FieldConfig\TextConfig;
 use Maispace\MaiBase\TableConfigurationArray\Helper;
 use Maispace\MaiBase\TableConfigurationArray\Table;
 
@@ -18,54 +23,48 @@ return (new Table($lang('table.tx_maimember_application')))
     ->addColumn(
         'first_name',
         $lang('tx_maimember_application.first_name'),
-        ['type' => 'input', 'size' => 30, 'max' => 100, 'eval' => 'trim,required']
+        (new InputConfig())->setSize(30)->setMax(100)->setEval('trim,required')
     )
     ->addColumn(
         'last_name',
         $lang('tx_maimember_application.last_name'),
-        ['type' => 'input', 'size' => 30, 'max' => 100, 'eval' => 'trim,required']
+        (new InputConfig())->setSize(30)->setMax(100)->setEval('trim,required')
     )
     ->addColumn(
         'email',
         $lang('tx_maimember_application.email'),
-        ['type' => 'email', 'eval' => 'required']
+        (new EmailConfig())->setEval('required')
     )
     ->addColumn(
         'message',
         $lang('tx_maimember_application.message'),
-        ['type' => 'text', 'rows' => 10, 'cols' => 50, 'eval' => 'trim']
+        (new TextConfig())->setRows(10)->setCols(50)->setEval('trim')
     )
     ->addColumn(
         'status',
         $lang('tx_maimember_application.status'),
-        [
-            'type' => 'select',
-            'renderType' => 'selectSingle',
-            'items' => [
+        (new SelectSingleConfig())
+            ->setItems([
                 ['label' => $lang('tx_maimember_application.status.pending'), 'value' => 'pending'],
                 ['label' => $lang('tx_maimember_application.status.approved'), 'value' => 'approved'],
                 ['label' => $lang('tx_maimember_application.status.rejected'), 'value' => 'rejected'],
-            ],
-            'default' => 'pending',
-        ]
+            ])
+            ->setDefault('pending')
     )
     ->addColumn(
         'submitted_at',
         $lang('tx_maimember_application.submitted_at'),
-        ['type' => 'datetime', 'format' => 'datetime', 'readOnly' => true]
+        (new DatetimeConfig())->setFormat('datetime')->setReadOnly()
     )
     ->addColumn(
         'member',
         $lang('tx_maimember_application.member'),
-        [
-            'type' => 'select',
-            'renderType' => 'selectSingle',
-            'foreign_table' => 'tx_maimember_member',
-            'foreign_table_where' => 'ORDER BY tx_maimember_member.last_name',
-            'items' => [['label' => '', 'value' => 0]],
-            'minitems' => 0,
-            'maxitems' => 1,
-        ]
+        (new SelectSingleConfig())
+            ->setForeignTable('tx_maimember_member')
+            ->setForeignTableWhere('ORDER BY tx_maimember_member.last_name')
+            ->setItems([['label' => '', 'value' => 0]])
+            ->setMinItems(0)
+            ->setMaxItems(1)
     )
     ->addPalette(
         'name',
