@@ -7,13 +7,17 @@ namespace Maispace\MaiMember\Controller;
 use Maispace\MaiBase\Controller\AbstractActionController;
 use Maispace\MaiMember\Domain\Model\Application;
 use Maispace\MaiMember\Domain\Repository\ApplicationRepository;
+use Maispace\MaiMember\Service\MemberMailer;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 
 class ApplicationController extends AbstractActionController
 {
     public function __construct(
         private readonly ApplicationRepository $applicationRepository,
+        private readonly MemberMailer $memberMailer,
+        private readonly PersistenceManagerInterface $persistenceManager,
     ) {}
 
     public function formAction(): ResponseInterface
@@ -30,6 +34,9 @@ class ApplicationController extends AbstractActionController
         $application->setStatus('pending');
 
         $this->applicationRepository->add($application);
+        $this->persistenceManager->persistAll();
+
+        $this->memberMailer->sendApplicationReceived($application);
 
         $this->addFlashMessage(
             $this->translate('application.success.message'),

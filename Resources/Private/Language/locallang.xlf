@@ -36,6 +36,36 @@
             <trans-unit id="application.success.message">
                 <source>Your membership application has been received. We will get back to you shortly.</source>
             </trans-unit>
+            <trans-unit id="member.list.empty">
+                <source>No members found.</source>
+            </trans-unit>
+            <trans-unit id="email.applicationReceived.subject">
+                <source>We received your application</source>
+            </trans-unit>
+            <trans-unit id="email.applicationReceived.greeting">
+                <source>Hello %s,</source>
+            </trans-unit>
+            <trans-unit id="email.applicationReceived.body">
+                <source>Thank you for your membership application. We have received it and will review it shortly.</source>
+            </trans-unit>
+            <trans-unit id="email.applicationApproved.subject">
+                <source>Your application has been approved</source>
+            </trans-unit>
+            <trans-unit id="email.applicationApproved.greeting">
+                <source>Hello %s,</source>
+            </trans-unit>
+            <trans-unit id="email.applicationApproved.body">
+                <source>Your membership application has been approved. Welcome!</source>
+            </trans-unit>
+            <trans-unit id="email.applicationRejected.subject">
+                <source>Update on your application</source>
+            </trans-unit>
+            <trans-unit id="email.applicationRejected.greeting">
+                <source>Hello %s,</source>
+            </trans-unit>
+            <trans-unit id="email.applicationRejected.body">
+                <source>Thank you for your interest. Unfortunately we are not able to accept your application at this time.</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

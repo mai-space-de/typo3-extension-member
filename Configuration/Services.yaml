@@ -6,7 +6,8 @@ services:
 
   Maispace\MaiMember\:
     resource: '../Classes/*'
-    exclude: '../Classes/Domain/Model/*'
+    exclude:
+      - '../Classes/Domain/Model/*'
 
   Maispace\MaiMember\Controller\MemberController:
     public: true
@@ -15,4 +16,10 @@ services:
     public: true
 
   Maispace\MaiMember\Controller\Backend\MemberBackendController:
+    public: true
+
+  Maispace\MaiMember\Service\ApplicationService:
+    public: true
+
+  Maispace\MaiMember\Service\MemberMailer:
     public: true

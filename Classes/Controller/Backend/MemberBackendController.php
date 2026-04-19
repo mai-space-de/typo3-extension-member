@@ -6,8 +6,11 @@ namespace Maispace\MaiMember\Controller\Backend;
 
 use Maispace\MaiBase\Controller\Backend\AbstractBackendController;
 use Maispace\MaiBase\Controller\Traits\ResponseHelpersTrait;
+use Maispace\MaiMember\Domain\Model\Application;
 use Maispace\MaiMember\Domain\Repository\ApplicationRepository;
 use Maispace\MaiMember\Domain\Repository\MemberRepository;
+use Maispace\MaiMember\Service\ApplicationService;
+use Maispace\MaiMember\Service\MemberMailer;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Attribute\AsController;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
@@ -23,6 +26,8 @@ class MemberBackendController extends AbstractBackendController
         IconFactory $iconFactory,
         private readonly MemberRepository $memberRepository,
         private readonly ApplicationRepository $applicationRepository,
+        private readonly ApplicationService $applicationService,
+        private readonly MemberMailer $memberMailer,
     ) {
         parent::__construct($moduleTemplateFactory, $iconFactory);
     }
@@ -30,7 +35,11 @@ class MemberBackendController extends AbstractBackendController
     public function indexAction(): ResponseInterface
     {
         $moduleTemplate = $this->createModuleTemplate();
-        $this->addShortcutButton($moduleTemplate);
+        $this->addShortcutButton(
+            $moduleTemplate,
+            'mai_member',
+            'Members',
+        );
 
         $this->assignMultiple($moduleTemplate, [
             'members' => $this->memberRepository->findAll(),
@@ -38,6 +47,30 @@ class MemberBackendController extends AbstractBackendController
         ]);
 
         return $this->renderModuleResponse($moduleTemplate, 'Index');
+    }
+
+    public function approveAction(Application $application): ResponseInterface
+    {
+        $this->applicationService->approve($application);
+        $this->memberMailer->sendApplicationApproved($application);
+        $this->flashSuccess(
+            'Application approved and member record created.',
+            $application->getFullName(),
+        );
+
+        return $this->redirect('index');
+    }
+
+    public function rejectAction(Application $application): ResponseInterface
+    {
+        $this->applicationService->reject($application);
+        $this->memberMailer->sendApplicationRejected($application);
+        $this->flashInfo(
+            'Application marked as rejected.',
+            $application->getFullName(),
+        );
+
+        return $this->redirect('index');
     }
 
     public function exportCsvAction(): ResponseInterface

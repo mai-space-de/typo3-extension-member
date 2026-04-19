@@ -1,0 +1,9 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<body>
+    <p>
+        <f:translate key="email.applicationReceived.greeting" extensionName="mai_member" arguments="{0: application.firstName}" default="Hello {application.firstName},"/>
+    </p>
+    <p><f:translate key="email.applicationReceived.body" extensionName="mai_member" default="Thank you for your membership application. We have received it and will review it shortly."/></p>
+</body>
+</html>
