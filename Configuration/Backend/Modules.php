@@ -10,7 +10,7 @@ return [
         'access' => 'user',
         'workspaces' => 'online',
         'path' => '/module/mai-member',
-        'iconIdentifier' => 'ext-maispace-mai_member',
+        'iconIdentifier' => 'mai-backend-module',
         'labels' => 'LLL:EXT:mai_member/Resources/Private/Language/locallang_mod.xlf',
         'extensionName' => 'MaiMember',
         'controllerActions' => [

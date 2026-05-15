@@ -9,10 +9,10 @@ return [
     ],
     'tx-maimember-member' => [
         'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-        'source' => 'EXT:mai_member/Resources/Public/Icons/tx_maimember_member.svg',
+        'source' => 'EXT:mai_base/Resources/Public/Icons/generic_table.svg',
     ],
     'tx-maimember-application' => [
         'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-        'source' => 'EXT:mai_member/Resources/Public/Icons/tx_maimember_application.svg',
+        'source' => 'EXT:mai_base/Resources/Public/Icons/generic_table.svg',
     ],
 ];

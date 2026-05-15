@@ -8,7 +8,7 @@ defined('TYPO3') or die();
     [
         'label' => 'LLL:EXT:mai_member/Resources/Private/Language/locallang_db.xlf:tt_content.CType.mai_member_view',
         'value' => 'mai_member_view',
-        'icon' => 'EXT:mai_member/Resources/Public/Icons/ContentElement/MembersView.svg',
+        'icon' => 'EXT:mai_base/Resources/Public/Icons/generic_content.svg',
         'group' => 'default',
     ],
     'CType',
@@ -19,7 +19,7 @@ defined('TYPO3') or die();
     [
         'label' => 'LLL:EXT:mai_member/Resources/Private/Language/locallang_db.xlf:tt_content.CType.mai_member_application',
         'value' => 'mai_member_application',
-        'icon' => 'EXT:mai_member/Resources/Public/Icons/ContentElement/MembersView.svg',
+        'icon' => 'EXT:mai_base/Resources/Public/Icons/generic_content.svg',
         'group' => 'default',
     ],
     'CType',
