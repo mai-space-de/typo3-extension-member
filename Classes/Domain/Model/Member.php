@@ -6,7 +6,6 @@ namespace Maispace\MaiMember\Domain\Model;
 
 use TYPO3\CMS\Extbase\Annotation\ORM\Lazy;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
-use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 class Member extends AbstractEntity
@@ -22,7 +21,7 @@ class Member extends AbstractEntity
     protected ?FileReference $image = null;
 
     #[Lazy]
-    protected ?FrontendUser $feUser = null;
+    protected ?AbstractEntity $feUser = null;
 
     public function getFirstName(): string
     {
@@ -104,12 +103,12 @@ class Member extends AbstractEntity
         $this->image = $image;
     }
 
-    public function getFeUser(): ?FrontendUser
+    public function getFeUser(): ?AbstractEntity
     {
         return $this->feUser;
     }
 
-    public function setFeUser(?FrontendUser $feUser): void
+    public function setFeUser(?AbstractEntity $feUser): void
     {
         $this->feUser = $feUser;
     }

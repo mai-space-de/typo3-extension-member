@@ -16,13 +16,12 @@ class ApplicationService
         private readonly ApplicationRepository $applicationRepository,
         private readonly MemberRepository $memberRepository,
         private readonly PersistenceManagerInterface $persistenceManager,
-    ) {
-    }
+    ) {}
 
     public function approve(Application $application, int $memberStoragePid = 0): Member
     {
         $member = new Member();
-        $member->setPid($memberStoragePid > 0 ? $memberStoragePid : $application->getPid());
+        $member->setPid($memberStoragePid > 0 ? $memberStoragePid : ((int) $application->getPid()));
         $member->setFirstName($application->getFirstName());
         $member->setLastName($application->getLastName());
         $member->setEmail($application->getEmail());

@@ -30,7 +30,7 @@ class ApplicationController extends AbstractActionController
 
     public function submitAction(Application $application): ResponseInterface
     {
-        $application->setSubmittedAt((int)$GLOBALS['EXEC_TIME']);
+        $application->setSubmittedAt((int) $GLOBALS['EXEC_TIME']);
         $application->setStatus('pending');
 
         $this->applicationRepository->add($application);
@@ -49,7 +49,7 @@ class ApplicationController extends AbstractActionController
     private function translate(string $key): string
     {
         return $this->getLanguageService()->sL(
-            'LLL:EXT:mai_member/Resources/Private/Language/locallang.xlf:' . $key
+            'LLL:EXT:mai_member/Resources/Private/Language/locallang.xlf:' . $key,
         ) ?: $key;
     }
 

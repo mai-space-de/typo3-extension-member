@@ -15,7 +15,7 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 class ApplicationRepository extends Repository
 {
     /**
-     * @var array<string, string>
+     * @var array<non-empty-string, 'ASC'|'DESC'>
      */
     protected $defaultOrderings = [
         'submittedAt' => QueryInterface::ORDER_DESCENDING,

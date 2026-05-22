@@ -1,5 +1,12 @@
-plugin.tx_maimember {
-    settings {
-        listLimit = 12
+plugin {
+    tx_maimember {
+        view {
+            templateRootPath = EXT:mai_member/Resources/Private/Templates/
+            partialRootPath = EXT:mai_member/Resources/Private/Partials/
+            layoutRootPath = EXT:mai_member/Resources/Private/Layouts/
+        }
+        settings {
+            listLimit = 12
+        }
     }
 }

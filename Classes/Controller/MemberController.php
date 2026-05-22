@@ -20,13 +20,13 @@ class MemberController extends AbstractActionController
     public function listAction(): ResponseInterface
     {
         $settings = $this->getSettings();
-        $limit = (int)($settings['listLimit'] ?? 12);
+        $limit = (int) ($settings['listLimit'] ?? 12);
 
         $members = $this->memberRepository->findActive();
-        $pagination = $this->paginateQueryResult($members, $this->request, $limit);
+        $pagination = $this->paginateQueryResult($members, $limit);
 
         $this->view->assignMultiple([
-            'members' => $pagination['paginatedItems'],
+            'members' => $pagination['paginator'],
             'pagination' => $pagination['pagination'],
         ]);
 

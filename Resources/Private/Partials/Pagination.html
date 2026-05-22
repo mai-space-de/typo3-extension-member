@@ -1,0 +1,42 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:if condition="{pagination.allPageNumbers -> f:count() > 1}">
+    <nav class="mai-member-pagination" aria-label="{f:translate(key: 'LLL:EXT:mai_member/Resources/Private/Language/locallang.xlf:pagination.label', default: 'Page navigation')}">
+        <ul class="mai-member-pagination__list" role="list">
+            <f:if condition="{pagination.previousPageNumber}">
+                <li class="mai-member-pagination__item mai-member-pagination__item--prev">
+                    <f:link.action action="list"
+                                   arguments="{currentPage: pagination.previousPageNumber}"
+                                   class="mai-member-pagination__link"
+                                   rel="prev">
+                        <f:translate key="LLL:EXT:mai_member/Resources/Private/Language/locallang.xlf:pagination.prev" default="Previous" />
+                    </f:link.action>
+                </li>
+            </f:if>
+
+            <f:for each="{pagination.allPageNumbers}" as="pageNumber">
+                <li class="mai-member-pagination__item{f:if(condition: pageNumber == pagination.currentPageNumber, then: ' mai-member-pagination__item--current')}">
+                    <f:link.action action="list"
+                                   arguments="{currentPage: pageNumber}"
+                                   class="mai-member-pagination__link"
+                                   aria-current="{f:if(condition: pageNumber == pagination.currentPageNumber, then: 'page')}">
+                        {pageNumber}
+                    </f:link.action>
+                </li>
+            </f:for>
+
+            <f:if condition="{pagination.nextPageNumber}">
+                <li class="mai-member-pagination__item mai-member-pagination__item--next">
+                    <f:link.action action="list"
+                                   arguments="{currentPage: pagination.nextPageNumber}"
+                                   class="mai-member-pagination__link"
+                                   rel="next">
+                        <f:translate key="LLL:EXT:mai_member/Resources/Private/Language/locallang.xlf:pagination.next" default="Next" />
+                    </f:link.action>
+                </li>
+            </f:if>
+        </ul>
+    </nav>
+</f:if>
+</html>
