@@ -83,5 +83,7 @@
     },
     "suggest": {
         "maispace/mai-account": "FE-User linking on member records"
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
