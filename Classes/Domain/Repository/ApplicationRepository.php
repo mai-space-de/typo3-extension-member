@@ -38,4 +38,21 @@ class ApplicationRepository extends Repository
     {
         return $this->findByStatus('pending');
     }
+
+    public function findByEmail(string $email): ?Application
+    {
+        $query = $this->createQuery();
+        $query->matching(
+            $query->logicalAnd(
+                $query->equals('email', $email),
+                $query->in('status', ['pending', 'approved']),
+            ),
+        );
+        $query->setLimit(1);
+
+        /** @var QueryResultInterface<Application> $result */
+        $result = $query->execute();
+
+        return $result->getFirst();
+    }
 }

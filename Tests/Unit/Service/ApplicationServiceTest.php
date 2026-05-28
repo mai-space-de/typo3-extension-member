@@ -12,6 +12,8 @@ use Maispace\MaiMember\Service\ApplicationService;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use TYPO3\CMS\Core\Crypto\Random;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 
 final class ApplicationServiceTest extends TestCase
@@ -19,6 +21,8 @@ final class ApplicationServiceTest extends TestCase
     private ApplicationRepository&MockObject $applicationRepository;
     private MemberRepository&MockObject $memberRepository;
     private PersistenceManagerInterface&MockObject $persistenceManager;
+    private ConnectionPool&MockObject $connectionPool;
+    private Random&MockObject $random;
     private ApplicationService $subject;
 
     protected function setUp(): void
@@ -26,12 +30,18 @@ final class ApplicationServiceTest extends TestCase
         $this->applicationRepository = $this->createMock(ApplicationRepository::class);
         $this->memberRepository = $this->createMock(MemberRepository::class);
         $this->persistenceManager = $this->createMock(PersistenceManagerInterface::class);
+        $this->connectionPool = $this->createMock(ConnectionPool::class);
+        $this->random = $this->createMock(Random::class);
 
         $this->subject = new ApplicationService(
             $this->applicationRepository,
             $this->memberRepository,
             $this->persistenceManager,
+            $this->connectionPool,
+            $this->random,
         );
+
+        $this->subject->disableFeUserCreation();
     }
 
     // ── approve ─────────────────────────────────────────────────────────────
@@ -151,6 +161,90 @@ final class ApplicationServiceTest extends TestCase
         $member = $this->subject->approve($application, 42);
 
         self::assertSame(42, $member->getPid());
+    }
+
+    // ── approve + fe_user creation ──────────────────────────────────────────
+
+    #[Test]
+    public function approveCallsCreateFeUserForMemberWhenEnabled(): void
+    {
+        $application = $this->buildApplication('Jane', 'Doe', 'jane@example.com');
+
+        $this->memberRepository->method('add');
+        $this->applicationRepository->method('update');
+        $this->persistenceManager->method('persistAll');
+
+        $subject = $this->getMockBuilder(ApplicationService::class)
+            ->setConstructorArgs([
+                $this->applicationRepository,
+                $this->memberRepository,
+                $this->persistenceManager,
+                $this->connectionPool,
+                $this->random,
+            ])
+            ->onlyMethods(['createFeUserForMember'])
+            ->getMock();
+
+        $subject->enableFeUserCreation();
+
+        $subject->expects(self::once())
+            ->method('createFeUserForMember');
+
+        $subject->approve($application);
+    }
+
+    #[Test]
+    public function approveDoesNotCallCreateFeUserForMemberWhenDisabled(): void
+    {
+        $application = $this->buildApplication('Jane', 'Doe', 'jane@example.com');
+
+        $this->memberRepository->method('add');
+        $this->applicationRepository->method('update');
+        $this->persistenceManager->method('persistAll');
+
+        $subject = $this->getMockBuilder(ApplicationService::class)
+            ->setConstructorArgs([
+                $this->applicationRepository,
+                $this->memberRepository,
+                $this->persistenceManager,
+                $this->connectionPool,
+                $this->random,
+            ])
+            ->onlyMethods(['createFeUserForMember'])
+            ->getMock();
+
+        $subject->expects(self::never())
+            ->method('createFeUserForMember');
+
+        $subject->approve($application);
+    }
+
+    #[Test]
+    public function approveStillReturnsMemberWhenFeUserCreationEnabled(): void
+    {
+        $application = $this->buildApplication('Jane', 'Doe', 'jane@example.com');
+
+        $this->memberRepository->method('add');
+        $this->applicationRepository->method('update');
+        $this->persistenceManager->method('persistAll');
+
+        $subject = $this->getMockBuilder(ApplicationService::class)
+            ->setConstructorArgs([
+                $this->applicationRepository,
+                $this->memberRepository,
+                $this->persistenceManager,
+                $this->connectionPool,
+                $this->random,
+            ])
+            ->onlyMethods(['createFeUserForMember'])
+            ->getMock();
+
+        $subject->enableFeUserCreation();
+
+        $member = $subject->approve($application);
+
+        self::assertInstanceOf(Member::class, $member);
+        self::assertSame('approved', $application->getStatus());
     }
 
     // ── reject ──────────────────────────────────────────────────────────────

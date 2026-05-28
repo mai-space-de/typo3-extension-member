@@ -9,6 +9,7 @@ use Maispace\MaiMember\Domain\Model\Application;
 use Maispace\MaiMember\Domain\Repository\ApplicationRepository;
 use Maispace\MaiMember\Service\MemberMailer;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 
@@ -30,6 +31,17 @@ class ApplicationController extends AbstractActionController
 
     public function submitAction(Application $application): ResponseInterface
     {
+        $existingApplication = $this->applicationRepository->findByEmail($application->getEmail());
+        if ($existingApplication !== null) {
+            $this->addFlashMessage(
+                $this->translate('application.duplicate.message'),
+                $this->translate('application.duplicate.title'),
+                ContextualFeedbackSeverity::ERROR,
+            );
+
+            return $this->redirect('form');
+        }
+
         $application->setSubmittedAt((int) $GLOBALS['EXEC_TIME']);
         $application->setStatus('pending');
 

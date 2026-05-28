@@ -1,2 +1,19 @@
 parameters:
-    ignoreErrors:
+	ignoreErrors:
+		-
+			message: '#^Call to method confirm\(\) on an unknown class Maispace\\MaiAccount\\Service\\RegistrationService\.$#'
+			identifier: class.notFound
+			count: 1
+			path: Classes/Service/ApplicationService.php
+
+		-
+			message: '#^Call to method register\(\) on an unknown class Maispace\\MaiAccount\\Service\\RegistrationService\.$#'
+			identifier: class.notFound
+			count: 1
+			path: Classes/Service/ApplicationService.php
+
+		-
+			message: '#^Parameter \#1 \$className of static method TYPO3\\CMS\\Core\\Utility\\GeneralUtility\:\:makeInstance\(\) expects class\-string\<Maispace\\MaiAccount\\Service\\RegistrationService\>, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/ApplicationService.php

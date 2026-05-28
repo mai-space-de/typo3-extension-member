@@ -39,8 +39,30 @@ class MemberController extends AbstractActionController
             return $this->redirect('list');
         }
 
-        $this->view->assign('member', $member);
+        $isLoggedIn = $this->isFrontendUserLoggedIn();
+        $hasFeUser = $member->getFeUser() !== null;
+
+        $this->view->assignMultiple([
+            'member' => $member,
+            'isLoggedIn' => $isLoggedIn,
+            'hasFeUser' => $hasFeUser,
+        ]);
 
         return $this->htmlResponse();
+    }
+
+    private function isFrontendUserLoggedIn(): bool
+    {
+        if (!isset($GLOBALS['TSFE'])) {
+            return false;
+        }
+
+        $feUser = $GLOBALS['TSFE']->fe_user;
+        if (!$feUser instanceof \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication) {
+            return false;
+        }
+
+        $user = $feUser->user;
+        return is_array($user) && !empty($user['uid']);
     }
 }
