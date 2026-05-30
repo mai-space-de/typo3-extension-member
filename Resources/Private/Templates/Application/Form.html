@@ -9,6 +9,18 @@
 
     <f:flashMessages />
 
+    <f:form.validationResults>
+        <f:if condition="{validationResults.flattenedErrors}">
+            <div class="mai-member-application__errors" role="alert">
+                <f:for each="{validationResults.flattenedErrors}" as="errors" key="propertyName">
+                    <f:for each="{errors}" as="error">
+                        <p class="mai-member-application__error">{error.message}</p>
+                    </f:for>
+                </f:for>
+            </div>
+        </f:if>
+    </f:form.validationResults>
+
     <f:form action="submit" controller="Application" extensionName="MaiMember" method="post" object="{application}" objectName="application">
         <div class="mai-member-application__field">
             <f:form.label for="firstName">
