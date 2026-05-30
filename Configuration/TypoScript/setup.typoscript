@@ -28,4 +28,20 @@ plugin {
             }
         }
     }
+    tx_maimember_list {
+        view {
+            templateRootPaths {
+                0 = {$plugin.tx_maimember.view.templateRootPath}
+            }
+            partialRootPaths {
+                0 = {$plugin.tx_maimember.view.partialRootPath}
+            }
+            layoutRootPaths {
+                0 = {$plugin.tx_maimember.view.layoutRootPath}
+            }
+        }
+        settings {
+            listLimit = {$plugin.tx_maimember.settings.listLimit}
+        }
+    }
 }

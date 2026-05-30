@@ -93,6 +93,12 @@
             <trans-unit id="tab.workflow">
                 <source>Workflow</source>
             </trans-unit>
+            <trans-unit id="ctype.member_list">
+                <source>Members: List</source>
+            </trans-unit>
+            <trans-unit id="plugin.list.title">
+                <source>Members: List</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
