@@ -23,31 +23,31 @@
 
     <f:form action="submit" controller="Application" extensionName="MaiMember" method="post" object="{application}" objectName="application">
         <div class="mai-member-application__field">
-            <f:form.label for="firstName">
+            <label for="firstName" class="mai-member-application__label">
                 <f:translate key="application.form.firstName" extensionName="mai_member" />
-            </f:form.label>
-            <f:form.textfield id="firstName" property="firstName" required="required" />
+            </label>
+            <f:form.textfield id="firstName" property="firstName" required="required" class="mai-member-application__input" />
         </div>
 
         <div class="mai-member-application__field">
-            <f:form.label for="lastName">
+            <label for="lastName" class="mai-member-application__label">
                 <f:translate key="application.form.lastName" extensionName="mai_member" />
-            </f:form.label>
-            <f:form.textfield id="lastName" property="lastName" required="required" />
+            </label>
+            <f:form.textfield id="lastName" property="lastName" required="required" class="mai-member-application__input" />
         </div>
 
         <div class="mai-member-application__field">
-            <f:form.label for="email">
+            <label for="email" class="mai-member-application__label">
                 <f:translate key="application.form.email" extensionName="mai_member" />
-            </f:form.label>
-            <f:form.textfield id="email" property="email" type="email" required="required" />
+            </label>
+            <f:form.textfield id="email" property="email" type="email" required="required" class="mai-member-application__input" />
         </div>
 
         <div class="mai-member-application__field">
-            <f:form.label for="message">
+            <label for="message" class="mai-member-application__label">
                 <f:translate key="application.form.message" extensionName="mai_member" />
-            </f:form.label>
-            <f:form.textarea id="message" property="message" rows="5" />
+            </label>
+            <f:form.textarea id="message" property="message" rows="5" class="mai-member-application__textarea" />
         </div>
 
         <div class="mai-member-application__submit">
