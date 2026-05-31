@@ -51,10 +51,7 @@
         </div>
 
         <div class="mai-member-application__submit">
-            <f:variable name="submitLabel">
-                <f:translate key="application.form.submit" extensionName="mai_member" default="Submit Application"/>
-            </f:variable>
-            <f:form.submit value="{submitLabel}" class="mai-member-application__submit-button"/>
+            <f:form.submit value="{f:translate(key: 'application.form.submit', extensionName: 'mai_member', default: 'Submit Application')}" class="mai-member-application__submit-button"/>
         </div>
     </f:form>
 </div>
