@@ -23,35 +23,38 @@
 
     <f:form action="submit" controller="Application" extensionName="MaiMember" method="post" object="{application}" objectName="application">
         <div class="mai-member-application__field">
-            <label for="firstName" class="mai-member-application__label">
+            <label for="mai-member-application-firstName" class="mai-member-application__label">
                 <f:translate key="application.form.firstName" extensionName="mai_member" />
             </label>
-            <f:form.textfield id="firstName" property="firstName" required="required" class="mai-member-application__input" />
+            <f:form.textfield id="mai-member-application-firstName" property="firstName" required="required" class="mai-member-application__input" />
         </div>
 
         <div class="mai-member-application__field">
-            <label for="lastName" class="mai-member-application__label">
+            <label for="mai-member-application-lastName" class="mai-member-application__label">
                 <f:translate key="application.form.lastName" extensionName="mai_member" />
             </label>
-            <f:form.textfield id="lastName" property="lastName" required="required" class="mai-member-application__input" />
+            <f:form.textfield id="mai-member-application-lastName" property="lastName" required="required" class="mai-member-application__input" />
         </div>
 
         <div class="mai-member-application__field">
-            <label for="email" class="mai-member-application__label">
+            <label for="mai-member-application-email" class="mai-member-application__label">
                 <f:translate key="application.form.email" extensionName="mai_member" />
             </label>
-            <f:form.textfield id="email" property="email" type="email" required="required" class="mai-member-application__input" />
+            <f:form.textfield id="mai-member-application-email" property="email" type="email" required="required" class="mai-member-application__input" />
         </div>
 
         <div class="mai-member-application__field">
-            <label for="message" class="mai-member-application__label">
+            <label for="mai-member-application-message" class="mai-member-application__label">
                 <f:translate key="application.form.message" extensionName="mai_member" />
             </label>
-            <f:form.textarea id="message" property="message" rows="5" class="mai-member-application__textarea" />
+            <f:form.textarea id="mai-member-application-message" property="message" rows="5" class="mai-member-application__textarea" />
         </div>
 
         <div class="mai-member-application__submit">
-            <f:form.submit value="{f:translate(key: 'application.form.submit', extensionName: 'mai_member')}" />
+            <f:variable name="submitLabel">
+                <f:translate key="application.form.submit" extensionName="mai_member" default="Submit Application"/>
+            </f:variable>
+            <f:form.submit value="{submitLabel}" class="mai-member-application__submit-button"/>
         </div>
     </f:form>
 </div>
