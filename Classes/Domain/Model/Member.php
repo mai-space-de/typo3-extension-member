@@ -7,6 +7,7 @@ namespace Maispace\MaiMember\Domain\Model;
 use TYPO3\CMS\Extbase\Annotation\ORM\Lazy;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy;
 
 class Member extends AbstractEntity
 {
@@ -19,10 +20,10 @@ class Member extends AbstractEntity
     protected int $joinDate = 0;
 
     #[Lazy]
-    protected ?FileReference $image = null;
+    protected FileReference|LazyLoadingProxy|null $image = null;
 
     #[Lazy]
-    protected ?AbstractEntity $feUser = null;
+    protected AbstractEntity|LazyLoadingProxy|null $feUser = null;
 
     public function getFirstName(): string
     {
@@ -106,7 +107,11 @@ class Member extends AbstractEntity
 
     public function getImage(): ?FileReference
     {
-        return $this->image;
+        if ($this->image instanceof LazyLoadingProxy) {
+            $this->image->_loadRealInstance();
+        }
+
+        return $this->image instanceof FileReference ? $this->image : null;
     }
 
     public function setImage(?FileReference $image): void
@@ -116,7 +121,11 @@ class Member extends AbstractEntity
 
     public function getFeUser(): ?AbstractEntity
     {
-        return $this->feUser;
+        if ($this->feUser instanceof LazyLoadingProxy) {
+            $this->feUser->_loadRealInstance();
+        }
+
+        return $this->feUser instanceof AbstractEntity ? $this->feUser : null;
     }
 
     public function setFeUser(?AbstractEntity $feUser): void
