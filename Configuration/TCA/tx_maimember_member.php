@@ -31,9 +31,14 @@ return (new Table($lang('table.tx_maimember_member')))
         (new InputConfig())->setSize(30)->setMax(100)->setEval('trim')->setRequired()
     )
     ->addColumn(
+        'position',
+        $lang('tx_maimember_member.position'),
+        (new InputConfig())->setSize(30)->setMax(255)->setEval('trim')
+    )
+    ->addColumn(
         'email',
         $lang('tx_maimember_member.email'),
-        (new EmailConfig())->setRequired()
+        new EmailConfig()
     )
     ->addColumn(
         'phone',
@@ -87,7 +92,7 @@ return (new Table($lang('table.tx_maimember_member')))
     )
     ->addTypeShowItem(
         '0',
-        '--palette--;;name, image,
+        '--palette--;;name, position, image,
         --div--;' . $lang('tab.contact') . ', --palette--;;contact,
         --div--;' . $lang('tab.meta') . ', status, join_date, fe_user,
         --div--;' . $lang('tab.language') . ', --palette--;;language,

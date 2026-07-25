@@ -15,6 +15,9 @@
             <trans-unit id="tx_maimember_member.last_name">
                 <source>Last Name</source>
             </trans-unit>
+            <trans-unit id="tx_maimember_member.position">
+                <source>Position</source>
+            </trans-unit>
             <trans-unit id="tx_maimember_member.email">
                 <source>Email</source>
             </trans-unit>

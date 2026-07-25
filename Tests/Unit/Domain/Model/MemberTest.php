@@ -27,6 +27,13 @@ final class MemberTest extends TestCase
     }
 
     #[Test]
+    public function defaultPositionIsEmptyString(): void
+    {
+        $subject = new Member();
+        self::assertSame('', $subject->getPosition());
+    }
+
+    #[Test]
     public function defaultEmailIsEmptyString(): void
     {
         $subject = new Member();
@@ -163,6 +170,25 @@ final class MemberTest extends TestCase
         $subject->setLastName('Smith');
         $subject->setLastName('Jones');
         self::assertSame('Jones', $subject->getLastName());
+    }
+
+    // ── position getter / setter ───────────────────────────────────────────
+
+    #[Test]
+    public function setPositionStoresTheValue(): void
+    {
+        $subject = new Member();
+        $subject->setPosition('Schirmherr');
+        self::assertSame('Schirmherr', $subject->getPosition());
+    }
+
+    #[Test]
+    public function setPositionOverwritesPreviousValue(): void
+    {
+        $subject = new Member();
+        $subject->setPosition('Schirmherr');
+        $subject->setPosition('Vorsitzende');
+        self::assertSame('Vorsitzende', $subject->getPosition());
     }
 
     // ── email getter / setter ───────────────────────────────────────────────

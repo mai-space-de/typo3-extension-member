@@ -74,6 +74,7 @@ class MemberIndexer extends AbstractIndexer implements SearchResultFormatterInte
 
         return implode(' ', array_filter([
             $record->getFullName(),
+            $record->getPosition(),
             $record->getEmail(),
             $record->getPhone(),
         ]));

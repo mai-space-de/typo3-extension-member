@@ -15,7 +15,8 @@ Custom domain record in `tx_maimember_member` representing an approved, active m
 | --- | --- | --- | --- |
 | `first_name` | `varchar(255)` | ✅ | Trimmed on save; shown in backend label |
 | `last_name` | `varchar(255)` | ✅ | Primary backend label field; sorted A→Z by default |
-| `email` | `varchar(255)` | ✅ | Validated as email address |
+| `position` | `varchar(255)` | — | Optional role/title (e.g. Schirmherr); shown in list and detail |
+| `email` | `varchar(255)` | — | Validated as email when set; optional for roles without contact |
 | `phone` | `varchar(100)` | — | Optional contact number |
 | `status` | `varchar(20)` | ✅ | `'active'` (default) or `'inactive'` |
 | `join_date` | `int` (UNIX timestamp) | — | Date picker, format `date`; `0` = not set |
@@ -209,7 +210,7 @@ Route: `mai_member`. Actions are handled by `MemberBackendController`.
 | `indexAction` | Lists all members and all pending applications |
 | `approveAction(Application)` | Calls `ApplicationService::approve()`, sends `ApplicationApproved` mail, flash success |
 | `rejectAction(Application)` | Calls `ApplicationService::reject()`, sends `ApplicationRejected` mail, flash info |
-| `exportCsvAction` | Streams `members.csv` with columns `first_name, last_name, email, phone, status, join_date` |
+| `exportCsvAction` | Streams `members.csv` with columns `first_name, last_name, position, email, phone, status, join_date` |
 
 The `index` view renders two sections: the full member list and the pending-applications list.
 `exportCsvAction` formats `join_date` as `Y-m-d` when > 0, empty string otherwise.
@@ -295,6 +296,7 @@ It imports the main constants and setup files via `@import`.
 | `l10n_diffsource` | `mediumblob` | — | Diff source for translations |
 | `first_name` | `varchar(255)` | `''` | |
 | `last_name` | `varchar(255)` | `''` | |
+| `position` | `varchar(255)` | `''` | Optional role/title |
 | `email` | `varchar(255)` | `''` | |
 | `phone` | `varchar(100)` | `''` | |
 | `status` | `varchar(20)` | `'active'` | `'active'` or `'inactive'` |

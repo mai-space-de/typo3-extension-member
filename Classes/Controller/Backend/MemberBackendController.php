@@ -77,11 +77,12 @@ class MemberBackendController extends AbstractBackendController
     {
         $members = $this->memberRepository->findAll();
 
-        $rows = [['first_name', 'last_name', 'email', 'phone', 'status', 'join_date']];
+        $rows = [['first_name', 'last_name', 'position', 'email', 'phone', 'status', 'join_date']];
         foreach ($members as $member) {
             $rows[] = [
                 $member->getFirstName(),
                 $member->getLastName(),
+                $member->getPosition(),
                 $member->getEmail(),
                 $member->getPhone(),
                 $member->getStatus(),

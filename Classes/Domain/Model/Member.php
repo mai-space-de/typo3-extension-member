@@ -12,6 +12,7 @@ class Member extends AbstractEntity
 {
     protected string $firstName = '';
     protected string $lastName = '';
+    protected string $position = '';
     protected string $email = '';
     protected string $phone = '';
     protected string $status = 'active';
@@ -46,6 +47,16 @@ class Member extends AbstractEntity
     public function getFullName(): string
     {
         return trim($this->firstName . ' ' . $this->lastName);
+    }
+
+    public function getPosition(): string
+    {
+        return $this->position;
+    }
+
+    public function setPosition(string $position): void
+    {
+        $this->position = $position;
     }
 
     public function getEmail(): string

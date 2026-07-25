@@ -50,12 +50,14 @@ final class MemberIndexerTest extends TestCase
         $member = new Member();
         $member->setFirstName('John');
         $member->setLastName('Doe');
+        $member->setPosition('Schirmherr');
         $member->setEmail('john@example.com');
         $member->setPhone('+49 123 456789');
 
         $content = $this->invokeBuildContent($member);
 
         self::assertStringContainsString('John Doe', $content);
+        self::assertStringContainsString('Schirmherr', $content);
         self::assertStringContainsString('john@example.com', $content);
         self::assertStringContainsString('+49 123 456789', $content);
     }

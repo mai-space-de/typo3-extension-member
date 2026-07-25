@@ -1,6 +1,7 @@
 CREATE TABLE tx_maimember_member (
     first_name varchar(255) DEFAULT '' NOT NULL,
     last_name varchar(255) DEFAULT '' NOT NULL,
+    position varchar(255) DEFAULT '' NOT NULL,
     email varchar(255) DEFAULT '' NOT NULL,
     phone varchar(100) DEFAULT '' NOT NULL,
     status varchar(20) DEFAULT 'active' NOT NULL,
