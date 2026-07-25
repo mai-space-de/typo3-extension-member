@@ -17,7 +17,7 @@ Custom domain record in `tx_maimember_member` representing an approved, active m
 | `last_name` | `varchar(255)` | ✅ | Primary backend label field; sorted A→Z by default |
 | `position` | `varchar(255)` | — | Optional role/title (e.g. Schirmherr); shown in list and detail |
 | `email` | `varchar(255)` | — | Validated as email when set; optional for roles without contact |
-| `phone` | `varchar(100)` | — | Optional contact number |
+| `phone` | `varchar(100)` | — | Optional contact number; shown in list and detail |
 | `status` | `varchar(20)` | ✅ | `'active'` (default) or `'inactive'` |
 | `join_date` | `int` (UNIX timestamp) | — | Date picker, format `date`; `0` = not set |
 | `image` | FAL relation | — | Single image; max 1 file; common image types |
