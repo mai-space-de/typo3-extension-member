@@ -7,6 +7,7 @@ use Maispace\MaiBase\TableConfigurationArray\FieldConfig\EmailConfig;
 use Maispace\MaiBase\TableConfigurationArray\FieldConfig\FileConfig;
 use Maispace\MaiBase\TableConfigurationArray\FieldConfig\InputConfig;
 use Maispace\MaiBase\TableConfigurationArray\FieldConfig\SelectSingleConfig;
+use Maispace\MaiBase\TableConfigurationArray\FieldConfig\SlugConfig;
 use Maispace\MaiBase\TableConfigurationArray\Helper;
 use Maispace\MaiBase\TableConfigurationArray\Table;
 
@@ -29,6 +30,19 @@ return (new Table($lang('table.tx_maimember_member')))
         'last_name',
         $lang('tx_maimember_member.last_name'),
         (new InputConfig())->setSize(30)->setMax(100)->setEval('trim')->setRequired()
+    )
+    ->addColumn(
+        'slug',
+        $lang('tx_maimember_member.slug'),
+        (new SlugConfig())
+            ->setEval('uniqueInSite')
+            ->setFallbackCharacter('-')
+            ->setPrependSlash(false)
+            ->setGeneratorOptions([
+                'fields' => ['first_name', 'last_name'],
+                'fieldSeparator' => '-',
+                'replacements' => ['/' => ''],
+            ])
     )
     ->addColumn(
         'position',
@@ -92,7 +106,7 @@ return (new Table($lang('table.tx_maimember_member')))
     )
     ->addTypeShowItem(
         '0',
-        '--palette--;;name, position, image,
+        '--palette--;;name, slug, position, image,
         --div--;' . $lang('tab.contact') . ', --palette--;;contact,
         --div--;' . $lang('tab.meta') . ', status, join_date, fe_user,
         --div--;' . $lang('tab.language') . ', --palette--;;language,

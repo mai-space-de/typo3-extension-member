@@ -15,6 +15,7 @@ Custom domain record in `tx_maimember_member` representing an approved, active m
 | --- | --- | --- | --- |
 | `first_name` | `varchar(255)` | ✅ | Trimmed on save; shown in backend label |
 | `last_name` | `varchar(255)` | ✅ | Primary backend label field; sorted A→Z by default |
+| `slug` | `varchar(2048)` | — | Auto-generated from first + last name; used by site route enhancer `MaiMember` |
 | `position` | `varchar(255)` | — | Optional role/title (e.g. Schirmherr); shown in list and detail |
 | `email` | `varchar(255)` | — | Validated as email when set; optional for roles without contact |
 | `phone` | `varchar(100)` | — | Optional contact number; shown in list and detail |
@@ -303,6 +304,7 @@ It imports the main constants and setup files via `@import`.
 | `join_date` | `int unsigned` | `0` | UNIX timestamp; `0` = not set |
 | `image` | `int unsigned` | `0` | FAL reference count |
 | `fe_user` | `int unsigned` | `0` | FK → `fe_users.uid`; `0` = not linked |
+| `slug` | `varchar(2048)` | `''` | URL segment for detail routing |
 
 ### `tx_maimember_application`
 
@@ -338,6 +340,9 @@ It imports the main constants and setup files via `@import`.
   The `Member::feUser` field references `fe_users` directly (a TYPO3 core table). The reverse
   field (`tx_maiaccount_member_uid`) is absent when `mai_account` is not loaded.
 - **No custom category table** — `mai_member` has no category feature and must not introduce one.
+- **Pretty detail URLs** — Site route enhancer `MaiMember` maps `/{member}` to
+  `Member::detail` (and `/page-{currentPage}` for list pagination) via `PersistedAliasMapper`
+  on `tx_maimember_member.slug`.
 - **Layer rule** — `mai_member` is in the Feature layer and may depend on Infrastructure
   (`mai_base`) and Theme & Mail (`mai_mail`), but must not depend on other Feature-layer
   extensions directly. The optional `mai_account` coupling uses `GeneralUtility::makeInstance()`

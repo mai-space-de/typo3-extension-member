@@ -1,0 +1,143 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Maispace\MaiMember\Upgrades;
+
+use TYPO3\CMS\Core\Attribute\UpgradeWizard;
+use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\DataHandling\Model\RecordStateFactory;
+use TYPO3\CMS\Core\DataHandling\SlugHelper;
+use TYPO3\CMS\Core\Upgrades\DatabaseUpdatedPrerequisite;
+use TYPO3\CMS\Core\Upgrades\UpgradeWizardInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
+/**
+ * Backfills empty tx_maimember_member.slug values from first and last name.
+ */
+#[UpgradeWizard('maiMemberPopulateMemberSlugUpgrade')]
+final readonly class PopulateMemberSlugUpgrade implements UpgradeWizardInterface
+{
+    private const string TABLE = 'tx_maimember_member';
+
+    public function __construct(
+        private ConnectionPool $connectionPool,
+    ) {}
+
+    public function getTitle(): string
+    {
+        return 'Populate empty member slugs from name';
+    }
+
+    public function getDescription(): string
+    {
+        return sprintf(
+            'Generates URL slugs for %d member records that have an empty slug field.',
+            $this->countRowsNeedingUpdate(),
+        );
+    }
+
+    public function updateNecessary(): bool
+    {
+        return $this->countRowsNeedingUpdate() > 0;
+    }
+
+    /**
+     * @return list<class-string>
+     */
+    public function getPrerequisites(): array
+    {
+        return [
+            DatabaseUpdatedPrerequisite::class,
+        ];
+    }
+
+    public function executeUpdate(): bool
+    {
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE);
+        $queryBuilder->getRestrictions()->removeAll();
+
+        $rows = $queryBuilder
+            ->select('*')
+            ->from(self::TABLE)
+            ->where(
+                $queryBuilder->expr()->eq(
+                    'slug',
+                    $queryBuilder->createNamedParameter('', Connection::PARAM_STR),
+                ),
+            )
+            ->executeQuery()
+            ->fetchAllAssociative();
+
+        $slugHelper = $this->createSlugHelper();
+        $connection = $this->connectionPool->getConnectionForTable(self::TABLE);
+
+        foreach ($rows as $row) {
+            $uid = (int) ($row['uid'] ?? 0);
+            $pid = (int) ($row['pid'] ?? 0);
+            if ($uid <= 0) {
+                continue;
+            }
+
+            $proposal = $slugHelper->generate($row, $pid);
+            $state = RecordStateFactory::forName(self::TABLE)->fromArray($row, $pid, $uid);
+            $slug = $slugHelper->buildSlugForUniqueInSite($proposal, $state);
+
+            $connection->update(
+                self::TABLE,
+                ['slug' => $slug],
+                ['uid' => $uid],
+                ['slug' => Connection::PARAM_STR, 'uid' => Connection::PARAM_INT],
+            );
+        }
+
+        return true;
+    }
+
+    private function countRowsNeedingUpdate(): int
+    {
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE);
+        $queryBuilder->getRestrictions()->removeAll();
+
+        return (int) $queryBuilder
+            ->count('*')
+            ->from(self::TABLE)
+            ->where(
+                $queryBuilder->expr()->eq(
+                    'slug',
+                    $queryBuilder->createNamedParameter('', Connection::PARAM_STR),
+                ),
+            )
+            ->executeQuery()
+            ->fetchOne();
+    }
+
+    private function createSlugHelper(): SlugHelper
+    {
+        return GeneralUtility::makeInstance(
+            SlugHelper::class,
+            self::TABLE,
+            'slug',
+            $this->slugFieldConfiguration(),
+        );
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function slugFieldConfiguration(): array
+    {
+        return [
+            'type' => 'slug',
+            'eval' => 'uniqueInSite',
+            'fallbackCharacter' => '-',
+            'prependSlash' => false,
+            'generatorOptions' => [
+                'fields' => ['first_name', 'last_name'],
+                'fieldSeparator' => '-',
+                'replacements' => ['/' => ''],
+            ],
+        ];
+    }
+}

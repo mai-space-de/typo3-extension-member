@@ -17,6 +17,7 @@ class Member extends AbstractEntity
     protected string $email = '';
     protected string $phone = '';
     protected string $status = 'active';
+    protected string $slug = '';
     protected int $joinDate = 0;
 
     #[Lazy]
@@ -88,6 +89,16 @@ class Member extends AbstractEntity
     public function setStatus(string $status): void
     {
         $this->status = $status;
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
     }
 
     public function isActive(): bool

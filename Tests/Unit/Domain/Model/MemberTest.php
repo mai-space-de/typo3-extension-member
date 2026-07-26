@@ -75,6 +75,21 @@ final class MemberTest extends TestCase
         self::assertNull($subject->getFeUser());
     }
 
+    #[Test]
+    public function defaultSlugIsEmptyString(): void
+    {
+        $subject = new Member();
+        self::assertSame('', $subject->getSlug());
+    }
+
+    #[Test]
+    public function setSlugStoresTheValue(): void
+    {
+        $subject = new Member();
+        $subject->setSlug('doris-harnisch');
+        self::assertSame('doris-harnisch', $subject->getSlug());
+    }
+
     // ── isActive ────────────────────────────────────────────────────────────
 
     #[Test]
