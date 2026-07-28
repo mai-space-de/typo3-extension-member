@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages"
+          date="2025-01-01T00:00:00Z" product-name="mai_member">
+        <header/>
+        <body>
+            <trans-unit id="tt_content.CType.mai_member_view">
+                <source>Member List</source>
+                <target>Mitgliederliste</target>
+            </trans-unit>
+            <trans-unit id="tt_content.pi_flexform.mai_member_view">
+                <source>Member Settings</source>
+                <target>Mitgliedereinstellungen</target>
+            </trans-unit>
+            <trans-unit id="tt_content.CType.mai_member_application">
+                <source>Membership Application</source>
+                <target>Mitgliedsantrag</target>
+            </trans-unit>
+
+            <trans-unit id="flexform.sheet.general">
+                <source>General</source>
+                <target>Allgemein</target>
+            </trans-unit>
+            <trans-unit id="flexform.settings.listLimit">
+                <source>List Limit</source>
+                <target>Listenlimit</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
