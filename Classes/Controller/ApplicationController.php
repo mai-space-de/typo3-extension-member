@@ -11,6 +11,7 @@ use Maispace\MaiMember\Service\MemberMailer;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Attribute\RateLimit;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 
 class ApplicationController extends AbstractActionController
@@ -29,6 +30,7 @@ class ApplicationController extends AbstractActionController
         return $this->htmlResponse();
     }
 
+    #[RateLimit(limit: 2, interval: '1 day')]
     public function submitAction(Application $application): ResponseInterface
     {
         $existingApplication = $this->applicationRepository->findByEmail($application->getEmail());
