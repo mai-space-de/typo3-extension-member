@@ -6,16 +6,45 @@ namespace Maispace\MaiMember\Tests\Unit\Indexer;
 
 use Maispace\MaiMember\Domain\Model\Member;
 use Maispace\MaiMember\Indexer\MemberIndexer;
+use Maispace\MaiSearch\Domain\Service\SearchBackendInterface;
+use Maispace\MaiSearch\Service\BackendRegistry;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 final class MemberIndexerTest extends TestCase
 {
     private MemberIndexer $subject;
+    private BackendRegistry&MockObject $backendRegistry;
+    private SearchBackendInterface&MockObject $activeBackend;
 
     protected function setUp(): void
     {
         $this->subject = new MemberIndexer();
+
+        $this->activeBackend = $this->createMock(SearchBackendInterface::class);
+        $this->backendRegistry = $this->createMock(BackendRegistry::class);
+        $this->backendRegistry->method('getActive')->willReturn($this->activeBackend);
+        $this->subject->injectBackendRegistry($this->backendRegistry);
+    }
+
+    #[Test]
+    public function removeRecordDelegatesToActiveBackend(): void
+    {
+        $this->activeBackend
+            ->expects(self::once())
+            ->method('removeDocument')
+            ->with('member', 42);
+
+        $this->subject->removeRecord(42, 'tx_maimember_member');
+    }
+
+    #[Test]
+    public function removeRecordIsNoOpForUnsupportedTable(): void
+    {
+        $this->activeBackend->expects(self::never())->method('removeDocument');
+
+        $this->subject->removeRecord(42, 'tx_mainews_news');
     }
 
     #[Test]
