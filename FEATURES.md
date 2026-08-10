@@ -30,6 +30,10 @@ Custom domain record in `tx_maimember_member` representing an approved, active m
 `MemberRepository::findActive()` filters by `status = 'active'` and sorts by `lastName ASC, firstName ASC`.
 `MemberRepository::findByStatus(string $status)` is the underlying query method.
 
+Names and contact details are **not** machine-translated (proper nouns / stable identifiers).
+`position` (role titles) **is** localized via language overlays and `mai_translate:hydrate-overlays`
+(`scripts/hydration/schema/hydration-v1.json` → `tx_maimember_member`).
+
 ---
 
 ## 2. Application Record

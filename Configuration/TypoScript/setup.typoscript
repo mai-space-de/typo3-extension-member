@@ -14,6 +14,9 @@ plugin {
         settings {
             listLimit = {$plugin.tx_maimember.settings.listLimit}
         }
+        persistence {
+            storagePid = 27
+        }
     }
     tx_maimember_application {
         view {
@@ -42,6 +45,9 @@ plugin {
         }
         settings {
             listLimit = {$plugin.tx_maimember.settings.listLimit}
+        }
+        persistence {
+            storagePid = 27
         }
     }
 }

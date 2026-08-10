@@ -83,6 +83,16 @@ class MemberIndexer extends AbstractIndexer implements SearchResultFormatterInte
         ]));
     }
 
+    /**
+     * Extbase plugin namespace for the MaiMember `List` plugin, matching the
+     * `MaiMember` route enhancer in config/sites/{site}/config.yaml (routePath
+     * '/{member}' → Member::detail, `member` aspect mapped via
+     * PersistedAliasMapper on tx_maimember_member.slug). A bare `?uid=...`
+     * query parameter isn't inside that namespace, so no route enhancer ever
+     * recognises it.
+     */
+    private const string PLUGIN_NAMESPACE = 'tx_maimember_list';
+
     protected function buildUrl(object $record): string
     {
         if (!$record instanceof Member) {
@@ -90,10 +100,17 @@ class MemberIndexer extends AbstractIndexer implements SearchResultFormatterInte
         }
 
         try {
-            $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId((int) $record->getPid());
+            $storagePid = (int) $record->getPid();
+            $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId($storagePid);
             $uri = $site->getRouter()->generateUri(
-                (int) $record->getPid(),
-                ['uid' => $record->getUid()],
+                $this->resolvePluginTargetPageId($site, 'MaiMember', 'List', $storagePid),
+                [
+                    self::PLUGIN_NAMESPACE => [
+                        'controller' => 'Member',
+                        'action' => 'detail',
+                        'member' => $record->getUid(),
+                    ],
+                ],
             );
 
             return (string) $uri;
