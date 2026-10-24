@@ -11,6 +11,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy;
 
 class Member extends AbstractEntity
 {
+    protected string $title = '';
     protected string $firstName = '';
     protected string $lastName = '';
     protected string $position = '';
@@ -19,12 +20,33 @@ class Member extends AbstractEntity
     protected string $status = 'active';
     protected string $slug = '';
     protected int $joinDate = 0;
+    protected int $doktype = 0;
 
     #[Lazy]
     protected FileReference|LazyLoadingProxy|null $image = null;
 
     #[Lazy]
     protected AbstractEntity|LazyLoadingProxy|null $feUser = null;
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
+    }
+
+    public function getDoktype(): int
+    {
+        return $this->doktype;
+    }
+
+    public function setDoktype(int $doktype): void
+    {
+        $this->doktype = $doktype;
+    }
 
     public function getFirstName(): string
     {

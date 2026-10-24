@@ -45,6 +45,12 @@
             <trans-unit id="tx_maimember_member.fe_user">
                 <source>Frontend User</source>
             </trans-unit>
+            <trans-unit id="tx_maimember_member.legacy_member_uid">
+                <source>Legacy member UID</source>
+            </trans-unit>
+            <trans-unit id="tx_maimember_member.image.addFile">
+                <source>Add image</source>
+            </trans-unit>
 
             <trans-unit id="tx_maimember_application.first_name">
                 <source>First Name</source>
@@ -83,7 +89,13 @@
             <trans-unit id="palette.contact">
                 <source>Contact</source>
             </trans-unit>
+            <trans-unit id="palette.memberMeta">
+                <source>Member meta</source>
+            </trans-unit>
 
+            <trans-unit id="tab.member">
+                <source>Member</source>
+            </trans-unit>
             <trans-unit id="tab.contact">
                 <source>Contact</source>
             </trans-unit>
@@ -104,6 +116,12 @@
             </trans-unit>
             <trans-unit id="plugin.list.title">
                 <source>Members: List</source>
+            </trans-unit>
+            <trans-unit id="plugin.detail.title">
+                <source>Members: Detail</source>
+            </trans-unit>
+            <trans-unit id="flexform.field.pages">
+                <source>Parent pages (Member pages as children)</source>
             </trans-unit>
         </body>
     </file>

@@ -21,10 +21,6 @@ return [
         'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
         'source' => $allIcons . 'interface-user-check--actions-close-checkmark-check-geometric-human-person-single-success-up-user--Streamline-Core.svg',
     ],
-    'tx-maimember-member' => [
-        'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-        'source' => $allIcons . 'interface-user-single--close-geometric-human-person-single-up-user--Streamline-Core.svg',
-    ],
     'tx-maimember-application' => [
         'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
         'source' => $allIcons . 'interface-user-add--actions-add-close-geometric-human-person-plus-single-up-user--Streamline-Core.svg',

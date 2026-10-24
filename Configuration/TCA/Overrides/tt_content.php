@@ -10,7 +10,7 @@ use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 $lang = Helper::localLangHelperFactory('mai_member', 'Default/locallang_tca.xlf');
 
 // "View" (maimember_view) duplicates "List" (maimember_list) below — same
-// MemberController::list,detail mapping. Kept registered (and its FlexForm
+// MemberController::list mapping. Kept registered (and its FlexForm
 // intact) so existing content elements keep rendering, but hidden from the
 // wizard via elements_wizard.tsconfig (disabled=1). Do not offer both for
 // new content.
@@ -40,4 +40,12 @@ ExtensionUtility::registerPlugin(
     'maispace_plugins_lists',
     '',
     'FILE:EXT:mai_member/Configuration/FlexForms/Members.xml',
+);
+
+ExtensionUtility::registerPlugin(
+    'MaiMember',
+    'Detail',
+    $lang('plugin.detail.title'),
+    'mai-member',
+    'maispace_plugins_lists',
 );

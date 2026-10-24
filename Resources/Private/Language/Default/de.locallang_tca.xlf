@@ -61,6 +61,14 @@
                 <source>Frontend User</source>
                 <target>Frontend-Benutzer</target>
             </trans-unit>
+            <trans-unit id="tx_maimember_member.legacy_member_uid">
+                <source>Legacy member UID</source>
+                <target>Legacy-Mitglieds-UID</target>
+            </trans-unit>
+            <trans-unit id="tx_maimember_member.image.addFile">
+                <source>Add image</source>
+                <target>Bild hinzufügen</target>
+            </trans-unit>
 
             <trans-unit id="tx_maimember_application.first_name">
                 <source>First Name</source>
@@ -111,7 +119,15 @@
                 <source>Contact</source>
                 <target>Kontakt</target>
             </trans-unit>
+            <trans-unit id="palette.memberMeta">
+                <source>Member meta</source>
+                <target>Mitglied-Meta</target>
+            </trans-unit>
 
+            <trans-unit id="tab.member">
+                <source>Member</source>
+                <target>Mitglied</target>
+            </trans-unit>
             <trans-unit id="tab.contact">
                 <source>Contact</source>
                 <target>Kontakt</target>
@@ -139,6 +155,14 @@
             <trans-unit id="plugin.list.title">
                 <source>Members: List</source>
                 <target>Mitglieder: Liste</target>
+            </trans-unit>
+            <trans-unit id="plugin.detail.title">
+                <source>Members: Detail</source>
+                <target>Mitglieder: Detail</target>
+            </trans-unit>
+            <trans-unit id="flexform.field.pages">
+                <source>Parent pages (Member pages as children)</source>
+                <target>Elternseiten (Mitglieder-Seiten als Kinder)</target>
             </trans-unit>
         </body>
     </file>

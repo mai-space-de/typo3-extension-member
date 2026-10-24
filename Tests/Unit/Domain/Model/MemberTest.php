@@ -90,6 +90,22 @@ final class MemberTest extends TestCase
         self::assertSame('doris-harnisch', $subject->getSlug());
     }
 
+    #[Test]
+    public function setDoktypeStoresTheValue(): void
+    {
+        $subject = new Member();
+        $subject->setDoktype(123);
+        self::assertSame(123, $subject->getDoktype());
+    }
+
+    #[Test]
+    public function setTitleStoresTheValue(): void
+    {
+        $subject = new Member();
+        $subject->setTitle('Jane Doe');
+        self::assertSame('Jane Doe', $subject->getTitle());
+    }
+
     // ── isActive ────────────────────────────────────────────────────────────
 
     #[Test]

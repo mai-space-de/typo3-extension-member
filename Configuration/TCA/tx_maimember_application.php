@@ -59,8 +59,11 @@ return (new Table($lang('table.tx_maimember_application')))
         'member',
         $lang('tx_maimember_application.member'),
         (new SelectSingleConfig())
-            ->setForeignTable('tx_maimember_member')
-            ->setForeignTableWhere('ORDER BY tx_maimember_member.last_name')
+            ->setForeignTable('pages')
+            ->setForeignTableWhere(
+                'AND {#pages}.{#doktype} = 123 AND {#pages}.{#sys_language_uid} = 0'
+                . ' AND {#pages}.{#deleted} = 0 ORDER BY {#pages}.{#tx_maimember_last_name} ASC'
+            )
             ->setItems([['label' => '', 'value' => 0]])
             ->setMinItems(0)
             ->setMaxItems(1)

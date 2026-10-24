@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Maispace\MaiMember\Tests\Unit\Indexer;
 
+use Maispace\MaiBase\Backend\CustomPageModule\DoktypeIds;
 use Maispace\MaiMember\Domain\Model\Member;
 use Maispace\MaiMember\Indexer\MemberIndexer;
+use Maispace\MaiSearch\Domain\Model\IndexingContext;
 use Maispace\MaiSearch\Domain\Service\SearchBackendInterface;
 use Maispace\MaiSearch\Service\BackendRegistry;
 use PHPUnit\Framework\Attributes\Test;
@@ -36,7 +38,7 @@ final class MemberIndexerTest extends TestCase
             ->method('removeDocument')
             ->with('member', 42);
 
-        $this->subject->removeRecord(42, 'tx_maimember_member');
+        $this->subject->removeRecord(42, 'pages');
     }
 
     #[Test]
@@ -44,7 +46,7 @@ final class MemberIndexerTest extends TestCase
     {
         $this->activeBackend->expects(self::never())->method('removeDocument');
 
-        $this->subject->removeRecord(42, 'tx_mainews_news');
+        $this->subject->removeRecord(42, 'tx_maimember_member');
     }
 
     #[Test]
@@ -54,16 +56,16 @@ final class MemberIndexerTest extends TestCase
     }
 
     #[Test]
-    public function supportsMemberTable(): void
+    public function supportsPagesTable(): void
     {
-        self::assertTrue($this->subject->supports('tx_maimember_member'));
+        self::assertTrue($this->subject->supports('pages'));
     }
 
     #[Test]
     public function doesNotSupportOtherTables(): void
     {
+        self::assertFalse($this->subject->supports('tx_maimember_member'));
         self::assertFalse($this->subject->supports('tx_mainews_news'));
-        self::assertFalse($this->subject->supports('pages'));
         self::assertFalse($this->subject->supports('tt_content'));
     }
 
@@ -77,6 +79,7 @@ final class MemberIndexerTest extends TestCase
     public function buildContentReturnsMemberInformation(): void
     {
         $member = new Member();
+        $member->setDoktype(DoktypeIds::MEMBER);
         $member->setFirstName('John');
         $member->setLastName('Doe');
         $member->setPosition('Schirmherr');
@@ -97,6 +100,42 @@ final class MemberIndexerTest extends TestCase
         $content = $this->invokeBuildContent(new \stdClass());
 
         self::assertSame('', $content);
+    }
+
+    #[Test]
+    public function indexRecordAcceptsStdClassMemberPageFromQueue(): void
+    {
+        $page = new \stdClass();
+        $page->uid = 42;
+        $page->doktype = DoktypeIds::MEMBER;
+        $page->title = 'Queued Member';
+        $page->tx_maimember_position = 'Chair';
+        $page->tx_maimember_join_date = 1700000000;
+        $page->slug = '/aktive-mitglieder/queued';
+
+        $this->activeBackend
+            ->expects(self::once())
+            ->method('indexDocument')
+            ->with(self::callback(static function (object $document): bool {
+                return $document->type === 'member'
+                    && $document->uid === 42
+                    && $document->title === 'Queued Member';
+            }));
+
+        $this->subject->indexRecord($page, new IndexingContext(core: 'core_de'));
+    }
+
+    #[Test]
+    public function indexRecordSkipsNonMemberDoktypeStdClass(): void
+    {
+        $page = new \stdClass();
+        $page->uid = 7;
+        $page->doktype = 1;
+        $page->title = 'Standard';
+
+        $this->activeBackend->expects(self::never())->method('indexDocument');
+
+        $this->subject->indexRecord($page, new IndexingContext(core: 'core_de'));
     }
 
     #[Test]

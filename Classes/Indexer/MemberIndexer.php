@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Maispace\MaiMember\Indexer;
 
+use Maispace\MaiBase\Backend\CustomPageModule\DoktypeIds;
 use Maispace\MaiMember\Domain\Model\Member;
 use Maispace\MaiSearch\Domain\Dto\SearchResult;
 use Maispace\MaiSearch\Domain\Model\IndexingContext;
@@ -15,9 +16,13 @@ use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 
+/**
+ * Indexes Member doktype pages. Emits SiteRouter page URLs as the public URL.
+ * Accepts both Extbase Member models (full reindex) and stdClass page rows (queue).
+ */
 class MemberIndexer extends AbstractIndexer implements SearchResultFormatterInterface
 {
-    private const TABLE_NAME = 'tx_maimember_member';
+    private const TABLE_NAME = 'pages';
 
     public function getType(): string
     {
@@ -43,17 +48,22 @@ class MemberIndexer extends AbstractIndexer implements SearchResultFormatterInte
 
     public function indexRecord(object $record, IndexingContext $context): void
     {
-        if (!$record instanceof Member) {
+        $page = $this->normalizePageRecord($record);
+        if ($page === null) {
+            return;
+        }
+
+        if ((int) ($page->doktype ?? 0) !== DoktypeIds::MEMBER) {
             return;
         }
 
         $document = $this->createDocument(
             type: $this->getType(),
-            uid: (int) $record->getUid(),
-            title: $record->getFullName(),
-            content: $this->buildContent($record),
-            url: $this->buildUrl($record),
-            crdate: new \DateTime(),
+            uid: (int) $page->uid,
+            title: $this->resolveTitle($page),
+            content: $this->buildContent($page),
+            url: $this->buildUrl($page),
+            crdate: $this->resolveDate($page),
             boost: $this->getBoost($this->getType()),
         );
 
@@ -71,51 +81,44 @@ class MemberIndexer extends AbstractIndexer implements SearchResultFormatterInte
 
     protected function buildContent(object $record): string
     {
-        if (!$record instanceof Member) {
+        $page = $this->normalizePageRecord($record);
+        if ($page === null) {
             return '';
         }
 
-        return implode(' ', array_filter([
-            $record->getFullName(),
-            $record->getPosition(),
-            $record->getEmail(),
-            $record->getPhone(),
-        ]));
+        $parts = array_filter([
+            $this->resolveTitle($page),
+            (string) ($page->tx_maimember_position ?? $page->position ?? ''),
+            (string) ($page->tx_maimember_email ?? $page->email ?? ''),
+            (string) ($page->tx_maimember_phone ?? $page->phone ?? ''),
+            $this->fetchPageContentText((int) $page->uid),
+        ]);
+
+        return implode(' ', $parts);
     }
 
     /**
-     * Extbase plugin namespace for the MaiMember `List` plugin, matching the
-     * `MaiMember` route enhancer in config/sites/{site}/config.yaml (routePath
-     * '/{member}' → Member::detail, `member` aspect mapped via
-     * PersistedAliasMapper on tx_maimember_member.slug). A bare `?uid=...`
-     * query parameter isn't inside that namespace, so no route enhancer ever
-     * recognises it.
+     * Public URL = SiteRouter page UID (Member page is the detail target).
      */
-    private const string PLUGIN_NAMESPACE = 'tx_maimember_list';
-
     protected function buildUrl(object $record): string
     {
-        if (!$record instanceof Member) {
+        $page = $this->normalizePageRecord($record);
+        if ($page === null) {
+            return '';
+        }
+
+        $pageUid = (int) $page->uid;
+        if ($pageUid <= 0) {
             return '';
         }
 
         try {
-            $storagePid = (int) $record->getPid();
-            $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId($storagePid);
-            $uri = $site->getRouter()->generateUri(
-                $this->resolvePluginTargetPageId($site, 'MaiMember', 'List', $storagePid),
-                [
-                    self::PLUGIN_NAMESPACE => [
-                        'controller' => 'Member',
-                        'action' => 'detail',
-                        'member' => $record->getUid(),
-                    ],
-                ],
-            );
+            $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId($pageUid);
+            $uri = $site->getRouter()->generateUri($pageUid);
 
             return (string) $uri;
-        } catch (\Exception) {
-            return '';
+        } catch (\Throwable) {
+            return (string) ($page->slug ?? '');
         }
     }
 
@@ -124,10 +127,22 @@ class MemberIndexer extends AbstractIndexer implements SearchResultFormatterInte
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getQueryBuilderForTable(self::TABLE_NAME);
 
-        $queryBuilder->select('*')->from(self::TABLE_NAME);
+        $queryBuilder
+            ->select('*')
+            ->from(self::TABLE_NAME)
+            ->where(
+                $queryBuilder->expr()->eq(
+                    'doktype',
+                    $queryBuilder->createNamedParameter(DoktypeIds::MEMBER, Connection::PARAM_INT),
+                ),
+                $queryBuilder->expr()->eq(
+                    'deleted',
+                    $queryBuilder->createNamedParameter(0, Connection::PARAM_INT),
+                ),
+            );
 
         if ($context->languageUid !== null) {
-            $queryBuilder->where(
+            $queryBuilder->andWhere(
                 $queryBuilder->expr()->eq(
                     'sys_language_uid',
                     $queryBuilder->createNamedParameter($context->languageUid, Connection::PARAM_INT),
@@ -166,6 +181,99 @@ class MemberIndexer extends AbstractIndexer implements SearchResultFormatterInte
     public function getIcon(string $type): string
     {
         return 'content-member';
+    }
+
+    private function normalizePageRecord(object $record): ?\stdClass
+    {
+        if ($record instanceof Member) {
+            $obj = new \stdClass();
+            $obj->uid = (int) $record->getUid();
+            $obj->doktype = $record->getDoktype();
+            $obj->title = $record->getTitle() !== '' ? $record->getTitle() : $record->getFullName();
+            $obj->slug = $record->getSlug();
+            $obj->tx_maimember_first_name = $record->getFirstName();
+            $obj->tx_maimember_last_name = $record->getLastName();
+            $obj->tx_maimember_position = $record->getPosition();
+            $obj->position = $record->getPosition();
+            $obj->tx_maimember_email = $record->getEmail();
+            $obj->email = $record->getEmail();
+            $obj->tx_maimember_phone = $record->getPhone();
+            $obj->phone = $record->getPhone();
+            $obj->tx_maimember_join_date = $record->getJoinDate();
+
+            return $obj;
+        }
+
+        if ($record instanceof \stdClass && isset($record->uid)) {
+            return $record;
+        }
+
+        return null;
+    }
+
+    private function resolveTitle(\stdClass $page): string
+    {
+        $title = trim((string) ($page->title ?? ''));
+        if ($title !== '') {
+            return $title;
+        }
+
+        return trim(
+            trim((string) ($page->tx_maimember_first_name ?? ''))
+            . ' '
+            . trim((string) ($page->tx_maimember_last_name ?? '')),
+        );
+    }
+
+    private function resolveDate(\stdClass $page): \DateTime
+    {
+        $timestamp = (int) ($page->tx_maimember_join_date ?? $page->tstamp ?? $page->crdate ?? 0);
+        if ($timestamp > 0) {
+            $dt = new \DateTime();
+            $dt->setTimestamp($timestamp);
+
+            return $dt;
+        }
+
+        return new \DateTime();
+    }
+
+    private function fetchPageContentText(int $pageUid): string
+    {
+        if ($pageUid <= 0) {
+            return '';
+        }
+
+        try {
+            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+                ->getQueryBuilderForTable('tt_content');
+
+            $rows = $queryBuilder
+                ->select('header', 'bodytext')
+                ->from('tt_content')
+                ->where(
+                    $queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($pageUid, Connection::PARAM_INT)),
+                    $queryBuilder->expr()->eq('hidden', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)),
+                    $queryBuilder->expr()->eq('deleted', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)),
+                )
+                ->executeQuery()
+                ->fetchAllAssociative();
+        } catch (\Throwable) {
+            return '';
+        }
+
+        $parts = [];
+        foreach ($rows as $row) {
+            if (!empty($row['header'])) {
+                $parts[] = strip_tags((string) $row['header']);
+            }
+
+            if (!empty($row['bodytext'])) {
+                $parts[] = strip_tags((string) $row['bodytext']);
+            }
+        }
+
+        return implode(' ', $parts);
     }
 
     private function buildSnippet(array $solrDoc): string

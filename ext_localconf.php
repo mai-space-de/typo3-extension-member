@@ -8,7 +8,7 @@ defined('TYPO3') or die();
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
         'MaiMember',
         'View',
-        [\Maispace\MaiMember\Controller\MemberController::class => 'list,detail'],
+        [\Maispace\MaiMember\Controller\MemberController::class => 'list'],
         [],
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
@@ -17,7 +17,17 @@ defined('TYPO3') or die();
         'MaiMember',
         'List',
         [
-            \Maispace\MaiMember\Controller\MemberController::class => 'list,detail',
+            \Maispace\MaiMember\Controller\MemberController::class => 'list',
+        ],
+        [],
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
+    );
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'MaiMember',
+        'Detail',
+        [
+            \Maispace\MaiMember\Controller\MemberController::class => 'detail',
         ],
         [],
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
@@ -30,4 +40,10 @@ defined('TYPO3') or die();
         [\Maispace\MaiMember\Controller\ApplicationController::class => 'submit'],
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
+
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['mai_member']
+        = \Maispace\MaiMember\Hook\MemberCacheInvalidationHook::class;
+
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass']['mai_member']
+        = \Maispace\MaiMember\Hook\MemberCacheInvalidationHook::class;
 })();

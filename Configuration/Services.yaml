@@ -24,6 +24,10 @@ services:
   Maispace\MaiMember\Service\MemberMailer:
     public: true
 
+  # DataHandler instantiates hooks via GeneralUtility::makeInstance() — must be public for DI
+  Maispace\MaiMember\Hook\MemberCacheInvalidationHook:
+    public: true
+
   Maispace\MaiMember\Indexer\MemberIndexer:
     tags:
       - name: 'maispace.search.indexer'
