@@ -17,7 +17,7 @@ return (new Table($lang('table.tx_maimember_application')))
     ->setLabel('last_name')
     ->setAlternativeLabelFields('first_name, email')
     ->appendAlternativeLabelToLabel()
-    ->setIconFile('EXT:mai_base/Resources/Public/Icons/generic_table.svg')
+    ->setIconFile('EXT:mai_base/Resources/Public/Icons/all-icons/interface-user-add--actions-add-close-geometric-human-person-plus-single-up-user--Streamline-Core.svg')
     ->setDefaultSorting('ORDER BY submitted_at DESC')
     ->addColumn(
         'first_name',

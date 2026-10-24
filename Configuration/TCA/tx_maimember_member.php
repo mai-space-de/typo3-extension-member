@@ -18,7 +18,7 @@ return (new Table($lang('table.tx_maimember_member')))
     ->setLabel('last_name')
     ->setAlternativeLabelFields('first_name')
     ->appendAlternativeLabelToLabel()
-    ->setIconFile('EXT:mai_base/Resources/Public/Icons/generic_table.svg')
+    ->setIconFile('EXT:mai_base/Resources/Public/Icons/all-icons/interface-user-single--close-geometric-human-person-single-up-user--Streamline-Core.svg')
     ->setDefaultSorting('ORDER BY last_name ASC, first_name ASC')
     ->setThumbnailField('image')
     ->addColumn(
