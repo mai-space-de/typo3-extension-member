@@ -32,3 +32,21 @@ services:
     tags:
       - name: 'maispace.search.indexer'
       - name: 'maispace.search.result_formatter'
+
+  dashboard.widget.maiMemberManual:
+    class: 'ProudNerds\PnBackendManual\Widgets\ManualWidget'
+    arguments:
+      $options:
+        file: 'EXT:mai_member/Resources/Private/Manual/Manual.md'
+        numbered: true
+        contentsDepth: 2
+        printButton: true
+    tags:
+      - name: dashboard.widget
+        identifier: 'maiMemberManual'
+        groupNames: 'documentation'
+        title: 'Handbuch: Mitglieder'
+        description: 'Kurze Anleitung für Mitglieder und Aufnahmeanträge.'
+        iconIdentifier: 'content-book'
+        height: 'medium'
+        width: 'medium'
