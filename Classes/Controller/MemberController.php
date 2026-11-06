@@ -79,7 +79,7 @@ class MemberController extends AbstractActionController
             return null;
         }
 
-        return $this->memberRepository->findByUid($pageUid);
+        return $this->memberRepository->findByRoutedPageUid($pageUid);
     }
 
     /**

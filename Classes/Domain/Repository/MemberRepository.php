@@ -115,6 +115,32 @@ class MemberRepository extends Repository
         return $result;
     }
 
+    /**
+     * The routed page uid is the language overlay. Extbase language handling
+     * looks up the default-language uid, so the overlay uid has to be read directly.
+     */
+    public function findByRoutedPageUid(int $pageUid): ?Member
+    {
+        if ($pageUid <= 0) {
+            return null;
+        }
+
+        $query = $this->createQuery();
+        $settings = clone $query->getQuerySettings();
+        $settings->setRespectSysLanguage(false);
+        $query->setQuerySettings($settings);
+        $query->matching(
+            $query->logicalAnd(
+                $query->equals('uid', $pageUid),
+                $this->doktypeConstraint($query),
+            ),
+        );
+        $query->setLimit(1);
+        $result = $query->execute()->getFirst();
+
+        return $result instanceof Member ? $result : null;
+    }
+
     private function doktypeConstraint(QueryInterface $query): \TYPO3\CMS\Extbase\Persistence\Generic\Qom\ConstraintInterface
     {
         return $query->equals('doktype', DoktypeIds::MEMBER);
