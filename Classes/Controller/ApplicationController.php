@@ -33,6 +33,12 @@ class ApplicationController extends AbstractActionController
     #[RateLimit(limit: 2, interval: '1 day')]
     public function submitAction(Application $application): ResponseInterface
     {
+        if (!$this->isCaptchaValid()) {
+            $this->flashCaptchaError();
+
+            return $this->redirect('form');
+        }
+
         $existingApplication = $this->applicationRepository->findByEmail($application->getEmail());
         if ($existingApplication !== null) {
             $this->addFlashMessage(
