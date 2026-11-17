@@ -1,5 +1,6 @@
 <html
     xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:mai="http://typo3.org/ns/Maispace/MaiAssets/ViewHelpers"
     xmlns:seo="http://typo3.org/ns/Maispace/MaiSeo/ViewHelpers"
     data-namespace-typo3-fluid="true"
 >
@@ -7,7 +8,10 @@
 <div class="mai-member-detail">
     <f:if condition="{member.image}">
         <div class="mai-member-detail__image">
-            <f:image image="{member.image}" alt="{member.fullName}" width="400" height="400" />
+            <mai:image.picture image="{member.image}"
+                               alt="{member.fullName}"
+                               slot="member-detail"
+                               width="400"/>
         </div>
     </f:if>
 

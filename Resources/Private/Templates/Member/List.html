@@ -1,5 +1,6 @@
 <html
     xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:mai="http://typo3.org/ns/Maispace/MaiAssets/ViewHelpers"
     data-namespace-typo3-fluid="true"
 >
 <f:if condition="{members.paginatedItems}">
@@ -9,7 +10,11 @@
                 <div class="mai-member-list__item">
                     <f:if condition="{member.image}">
                         <div class="mai-member-list__image">
-                            <f:image image="{member.image}" alt="{member.fullName}" width="800" height="800c" />
+                            <mai:image.picture image="{member.image}"
+                                               alt="{member.fullName}"
+                                               slot="member-card"
+                                               width="800"
+                                               critical="false"/>
                         </div>
                     </f:if>
                     <div class="mai-member-list__content">
